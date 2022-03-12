@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+  output   = "../generated/nexus-prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountType {
+  BASIC
+  PREMIUM
+}
+
+model User {
+  id        String      @id @default(uuid())
+  type      AccountType @default(BASIC)
+  verified  Boolean     @default(false)
+  username  String      @unique
+  email     String      @unique
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+
+  events    Event[]
+  rsvps     UsersInEvents[]
+  badges    BadgesOnUsers[]
+  interests CategoriesOnUsers[]
+}
+
+model Event {
+  id     String    @id @default(uuid())
+  name   String
+  desc   String?
+  lat    Float
+  lng    Float
+  start  DateTime
+  end    DateTime?
+  hostId String
+
+  host  User                 @relation(fields: [hostId], references: [id])
+  rsvps UsersInEvents[]
+  tags  CategoriesOnEvents[]
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String
+  desc String
+
+  onUsers CategoriesOnUsers[]
+  onEvets CategoriesOnEvents[]
+}
+
+model Badge {
+  id   String @id @default(uuid())
+  name String
+  desc String
+
+  attributions BadgesOnUsers[]
+}
+
+model CategoriesOnEvents {
+  event      Event    @relation(fields: [eventId], references: [id])
+  eventId    String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  createdAt  DateTime @default(now())
+
+  @@id([eventId, categoryId])
+}
+
+model CategoriesOnUsers {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  createdAt  DateTime @default(now())
+
+  @@id([userId, categoryId])
+}
+
+model UsersInEvents {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
+  createdAt DateTime @default(now())
+
+  @@id([userId, eventId])
+}
+
+model BadgesOnUsers {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  badge     Badge    @relation(fields: [badgeId], references: [id])
+  badgeId   String
+  createdAt DateTime @default(now())
+
+  @@id([userId, badgeId])
+}
