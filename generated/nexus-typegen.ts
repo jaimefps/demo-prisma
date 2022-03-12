@@ -54,12 +54,16 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Event: { // root type
+    id: string; // ID!
     name: string; // String!
   }
   HelloWorld: {};
   Query: {};
   User: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    email: string; // String!
     id: string; // String!
+    username: string; // String!
   }
 }
 
@@ -75,42 +79,57 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Event: { // field return type
+    host: NexusGenRootTypes['User']; // User!
+    id: string; // ID!
     name: string; // String!
   }
   HelloWorld: { // field return type
     speak: string | null; // String
   }
   Query: { // field return type
+    event: NexusGenRootTypes['Event'] | null; // Event
     helloWorld: NexusGenRootTypes['HelloWorld'] | null; // HelloWorld
     user: NexusGenRootTypes['User'] | null; // User
   }
   User: { // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    email: string; // String!
     events: NexusGenRootTypes['Event'][]; // [Event!]!
     eventsCount: number; // Int!
     id: string; // String!
+    username: string; // String!
   }
 }
 
 export interface NexusGenFieldTypeNames {
   Event: { // field return type name
+    host: 'User'
+    id: 'ID'
     name: 'String'
   }
   HelloWorld: { // field return type name
     speak: 'String'
   }
   Query: { // field return type name
+    event: 'Event'
     helloWorld: 'HelloWorld'
     user: 'User'
   }
   User: { // field return type name
+    createdAt: 'DateTime'
+    email: 'String'
     events: 'Event'
     eventsCount: 'Int'
     id: 'String'
+    username: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
   Query: {
+    event: { // args
+      id: string; // String!
+    }
     user: { // args
       id: string; // String!
     }

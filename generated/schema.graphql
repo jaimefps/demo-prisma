@@ -8,6 +8,8 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Event {
+  host: User!
+  id: ID!
   name: String!
 }
 
@@ -16,12 +18,16 @@ type HelloWorld {
 }
 
 type Query {
+  event(id: String!): Event
   helloWorld: HelloWorld
   user(id: String!): User
 }
 
 type User {
+  createdAt: DateTime!
+  email: String!
   events: [Event!]!
   eventsCount: Int!
   id: String!
+  username: String!
 }

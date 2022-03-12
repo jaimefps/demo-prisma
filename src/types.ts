@@ -9,16 +9,13 @@ import { User, Event } from "../generated/nexus-prisma";
 import { DateTimeResolver } from "graphql-scalars";
 import { GraphQLScalarType } from "graphql";
 
-export const DateType = asNexusMethod(
-  new GraphQLScalarType(DateTimeResolver),
-  "dateTime"
-);
-
 export const EventType = objectType({
   name: Event.$name,
   description: Event.$description,
   definition(t) {
+    t.field(Event.id);
     t.field(Event.name);
+    t.field(Event.host);
     // t.string("iDontExist"); // invalid field name
     // t.nonNull.string("name"); // invalid field type
   },
@@ -33,6 +30,9 @@ export const UserType = objectType({
     // t.field(User.username);
     // t.field(User.createdAt);
     t.nonNull.string("id");
+    t.nonNull.string("email");
+    t.nonNull.string("username");
+    t.nonNull.dateTime("createdAt");
     t.nonNull.list.nonNull.field("events", {
       type: EventType,
       resolve: (parent, args, context) => {
@@ -57,6 +57,36 @@ export const UserType = objectType({
   },
 });
 
+export const HelloWorld = objectType({
+  name: "HelloWorld",
+  definition(t) {
+    t.string("speak", {
+      resolve() {
+        return "HelloWorld";
+      },
+    });
+  },
+});
+
+// Custom scalar for compatibility
+// between Prisma and Nexus:
+export const DateType = asNexusMethod(
+  new GraphQLScalarType(DateTimeResolver),
+  "dateTime"
+);
+
+export const eventQuery = queryField("event", {
+  type: EventType,
+  args: {
+    id: nonNull(stringArg()),
+  },
+  resolve(_, args, context) {
+    return context.prisma.event.findUnique({
+      where: { id: args.id },
+    });
+  },
+});
+
 export const userQuery = queryField("user", {
   type: UserType,
   args: {
@@ -65,17 +95,6 @@ export const userQuery = queryField("user", {
   resolve(_, args, context) {
     return context.prisma.user.findUnique({
       where: { id: args.id },
-    });
-  },
-});
-
-export const HelloWorld = objectType({
-  name: "HelloWorld",
-  definition(t) {
-    t.string("speak", {
-      resolve() {
-        return "HelloWorld";
-      },
     });
   },
 });
