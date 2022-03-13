@@ -4,7 +4,6 @@ generator client {
 
 generator nexusPrisma {
   provider = "nexus-prisma"
-  output   = "../generated/nexus-prisma"
 }
 
 datasource db {
@@ -24,7 +23,7 @@ model User {
 
   type     AccountType @default(BASIC)
   verified Boolean     @default(false)
-  username String      @unique
+  username String?     @unique
   email    String      @unique
 
   categories CategoriesOnUsers[]
@@ -46,7 +45,7 @@ model Event {
   end    DateTime?
   hostId String
 
-  host       User                 @relation(fields: [hostId], references: [id])
+  host       User                 @relation(fields: [hostId], references: [id], onDelete: Cascade)
   attendance UsersInEvents[]
   categories CategoriesOnEvents[]
 }
@@ -75,9 +74,9 @@ model Badge {
 }
 
 model CategoriesOnEvents {
-  event      Event    @relation(fields: [eventId], references: [id])
+  event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId    String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId String
 
   createdAt DateTime @default(now())
@@ -85,9 +84,9 @@ model CategoriesOnEvents {
 }
 
 model CategoriesOnUsers {
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId String
 
   createdAt DateTime @default(now())
@@ -95,9 +94,9 @@ model CategoriesOnUsers {
 }
 
 model BadgesOnUsers {
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
-  badge   Badge  @relation(fields: [badgeId], references: [id])
+  badge   Badge  @relation(fields: [badgeId], references: [id], onDelete: Cascade)
   badgeId String
 
   createdAt DateTime @default(now())
@@ -105,9 +104,9 @@ model BadgesOnUsers {
 }
 
 model UsersInEvents {
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String
-  event   Event  @relation(fields: [eventId], references: [id])
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId String
 
   createdAt DateTime @default(now())

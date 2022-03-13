@@ -175,7 +175,13 @@ type EventEdge {
 }
 
 type HelloWorld {
-  speak: String
+  test: String
+}
+
+type Mutation {
+  createEvent(desc: String!, end: String!, lat: Float!, lng: Float!, name: String!, start: String!): Boolean
+  deleteEvent(eventId: String!): Boolean
+  updateEvent(desc: String!, end: String!, eventId: String!, lat: Float!, lng: Float!, name: String!, start: String!): Boolean
 }
 
 """
@@ -272,7 +278,7 @@ type User {
   ): EventConnection
   id: ID!
   updatedAt: DateTime!
-  username: String!
+  username: String
   verified: Boolean!
 }
 

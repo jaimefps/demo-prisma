@@ -1,14 +1,34 @@
 import { User, Event, Category, Badge } from "../generated/nexus-prisma"
+import { userCanMutateEvent } from "./data-sources/user"
 import { DateTimeResolver } from "graphql-scalars"
 import { GraphQLScalarType } from "graphql"
+import { desc, lat, lng, name } from "./validations/event"
 import {
-  objectType,
   asNexusMethod,
-  queryField,
-  stringArg,
+  floatArg,
+  list,
+  mutationField,
   nonNull,
-  list
+  objectType,
+  queryField,
+  stringArg
 } from "nexus"
+
+export const HelloWorldType = objectType({
+  name: "HelloWorld",
+  definition(t) {
+    t.string("test")
+  }
+})
+
+export const helloWorldQuery = queryField("helloWorld", {
+  type: HelloWorldType,
+  resolve() {
+    return {
+      test: "HelloWorld"
+    }
+  }
+})
 
 // Scalar for compatibility
 // between Prisma and Nexus:
@@ -313,9 +333,7 @@ export const badgeQuery = queryField("badge", {
 export const badgesQuery = queryField("badges", {
   type: nonNull(list(BadgeType)),
   resolve(_, args, ctx) {
-    return ctx.prisma.badge.findMany({
-      take: 10
-    })
+    return ctx.prisma.badge.findMany()
   }
 })
 
@@ -334,26 +352,108 @@ export const categoryQuery = queryField("category", {
 export const categoriesQuery = queryField("categories", {
   type: nonNull(list(CategoryType)),
   resolve(_, args, ctx) {
-    return ctx.prisma.category.findMany({
-      take: 10
-    })
+    return ctx.prisma.category.findMany()
   }
 })
 
-export const HelloWorldType = objectType({
-  name: "HelloWorld",
-  definition(t) {
-    t.string("speak", {
-      resolve() {
-        return "HelloWorld"
-      }
-    })
+export const createEvent = mutationField("createEvent", {
+  type: "Boolean",
+  args: {
+    name: stringArg(),
+    desc: stringArg(),
+    lat: floatArg(),
+    lng: floatArg(),
+    start: stringArg(),
+    end: stringArg()
+  },
+  /**
+   * TODO: start moving types into schema files.
+   * Sample validations.
+   */
+  validate() {
+    return {
+      name: name,
+      desc: desc,
+      lat: lat,
+      lng: lng
+    }
+  },
+  async resolve(_, args, ctx) {
+    const clientInfo = await ctx.clientInfo()
+    if (clientInfo) {
+      await ctx.prisma.event.create({
+        data: {
+          hostId: clientInfo.id,
+          start: new Date(args.start),
+          end: new Date(args.end),
+          name: args.name,
+          desc: args.desc,
+          lat: args.lat,
+          lng: args.lng,
+          attendance: {
+            create: {
+              userId: clientInfo.id
+            }
+          }
+        }
+      })
+      return true
+    }
+    return false
   }
 })
 
-export const helloWorldQuery = queryField("helloWorld", {
-  type: HelloWorldType,
-  resolve() {
-    return {}
+export const deleteEvent = mutationField("deleteEvent", {
+  type: "Boolean",
+  args: {
+    eventId: stringArg()
+  },
+  async authorize(_, args, ctx) {
+    const clientInfo = await ctx.clientInfo()
+    return userCanMutateEvent({
+      eventId: args.eventId,
+      userId: clientInfo?.id
+    })
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.event.delete({
+        where: { id: args.eventId }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const updateEvent = mutationField("updateEvent", {
+  type: "Boolean",
+  args: {
+    eventId: stringArg(),
+    name: stringArg(),
+    desc: stringArg(),
+    lat: floatArg(),
+    lng: floatArg(),
+    start: stringArg(),
+    end: stringArg()
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.event.update({
+        where: { id: args.eventId },
+        data: {
+          name: args.name,
+          desc: args.desc,
+          lat: args.lat,
+          lng: args.lng,
+          start: args.start,
+          end: args.end
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
   }
 })

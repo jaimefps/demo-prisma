@@ -5,6 +5,7 @@
 
 
 import type { Context } from "./../src/context"
+import type { ValidateResolver } from "nexus-validate"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { core, connectionPluginCore } from "nexus"
 declare global {
@@ -110,7 +111,10 @@ export interface NexusGenObjects {
     cursor: string; // String!
     node?: NexusGenRootTypes['Event'] | null; // Event
   }
-  HelloWorld: {};
+  HelloWorld: { // root type
+    test?: string | null; // String
+  }
+  Mutation: {};
   PageInfo: { // root type
     endCursor?: string | null; // String
     hasNextPage: boolean; // Boolean!
@@ -123,7 +127,7 @@ export interface NexusGenObjects {
     email: string; // String!
     id: string; // ID!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    username: string; // String!
+    username?: string | null; // String
     verified: boolean; // Boolean!
   }
   UserConnection: { // root type
@@ -212,7 +216,12 @@ export interface NexusGenFieldTypes {
     node: NexusGenRootTypes['Event'] | null; // Event
   }
   HelloWorld: { // field return type
-    speak: string | null; // String
+    test: string | null; // String
+  }
+  Mutation: { // field return type
+    createEvent: boolean | null; // Boolean
+    deleteEvent: boolean | null; // Boolean
+    updateEvent: boolean | null; // Boolean
   }
   PageInfo: { // field return type
     endCursor: string | null; // String
@@ -240,7 +249,7 @@ export interface NexusGenFieldTypes {
     events: NexusGenRootTypes['EventConnection'] | null; // EventConnection
     id: string; // ID!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    username: string; // String!
+    username: string | null; // String
     verified: boolean; // Boolean!
   }
   UserConnection: { // field return type
@@ -319,7 +328,12 @@ export interface NexusGenFieldTypeNames {
     node: 'Event'
   }
   HelloWorld: { // field return type name
-    speak: 'String'
+    test: 'String'
+  }
+  Mutation: { // field return type name
+    createEvent: 'Boolean'
+    deleteEvent: 'Boolean'
+    updateEvent: 'Boolean'
   }
   PageInfo: { // field return type name
     endCursor: 'String'
@@ -397,6 +411,28 @@ export interface NexusGenArgTypes {
       before?: string | null; // String
       first?: number | null; // Int
       last?: number | null; // Int
+    }
+  }
+  Mutation: {
+    createEvent: { // args
+      desc: string; // String!
+      end: string; // String!
+      lat: number; // Float!
+      lng: number; // Float!
+      name: string; // String!
+      start: string; // String!
+    }
+    deleteEvent: { // args
+      eventId: string; // String!
+    }
+    updateEvent: { // args
+      desc: string; // String!
+      end: string; // String!
+      eventId: string; // String!
+      lat: number; // Float!
+      lng: number; // Float!
+      name: string; // String!
+      start: string; // String!
     }
   }
   Query: {
@@ -504,6 +540,10 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+    /**
+     * Validate mutation arguments.
+     */
+    validate?: ValidateResolver<TypeName, FieldName>
     /**
      * Authorization for an individual field. Returning "true"
      * or "Promise<true>" means the field can be accessed.
