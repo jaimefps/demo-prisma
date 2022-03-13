@@ -97,6 +97,110 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'id'>
   }
   /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.createdAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model User
+    *
+    * Replace this default advisory JSDoc with your own documentation about model User
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model User {
+    *   /// Lorem ipsum dolor sit amet.
+    *   createdAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { User } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: User.$name
+    *   description: User.$description
+    *   definition(t) {
+    *     t.field(User.createdAt)
+    *   }
+    * })
+    */
+  createdAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'createdAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'User', 'createdAt'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.updatedAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model User
+    *
+    * Replace this default advisory JSDoc with your own documentation about model User
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model User {
+    *   /// Lorem ipsum dolor sit amet.
+    *   updatedAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { User } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: User.$name
+    *   description: User.$description
+    *   definition(t) {
+    *     t.field(User.updatedAt)
+    *   }
+    * })
+    */
+  updatedAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'updatedAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'User', 'updatedAt'>
+  }
+  /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.type`.
     *
     * ### ️⚠️ You have not writen documentation for model User
@@ -305,7 +409,7 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'email'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.createdAt`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.categories`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     *
@@ -314,7 +418,7 @@ export interface User {
     * ```prisma
     * model User {
     *   /// Lorem ipsum dolor sit amet.
-    *   createdAt  DateTime
+    *   categories  CategoriesOnUsers
     * }
     * ```
     *
@@ -329,22 +433,22 @@ export interface User {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.createdAt)
+    *     t.field(User.categories)
     *   }
     * })
     */
-  createdAt: {
+  categories: {
     /**
      * The name of this field.
      */
-    name: 'createdAt'
+    name: 'categories'
   
     /**
      * The type of this field.
      */
-    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'DateTime'>
-    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+    type: 'CategoriesOnUsers' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? (NexusCore.NexusListDef<'CategoriesOnUsers'> | NexusCore.NexusNonNullDef<'CategoriesOnUsers'>)
+    : 'Warning/Error: The type \'CategoriesOnUsers\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'CategoriesOnUsers\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -354,10 +458,10 @@ export interface User {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'User', 'createdAt'>
+    resolve: NexusCore.FieldResolver<'User', 'categories'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.updatedAt`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.attendance`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     *
@@ -366,7 +470,7 @@ export interface User {
     * ```prisma
     * model User {
     *   /// Lorem ipsum dolor sit amet.
-    *   updatedAt  DateTime
+    *   attendance  UsersInEvents
     * }
     * ```
     *
@@ -381,119 +485,15 @@ export interface User {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.updatedAt)
+    *     t.field(User.attendance)
     *   }
     * })
     */
-  updatedAt: {
+  attendance: {
     /**
      * The name of this field.
      */
-    name: 'updatedAt'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'DateTime'>
-    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'User', 'updatedAt'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.events`.
-    *
-    * ### ️⚠️ You have not writen documentation for model User
-    *
-    * Replace this default advisory JSDoc with your own documentation about model User
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model User {
-    *   /// Lorem ipsum dolor sit amet.
-    *   events  Event
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { User } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: User.$name
-    *   description: User.$description
-    *   definition(t) {
-    *     t.field(User.events)
-    *   }
-    * })
-    */
-  events: {
-    /**
-     * The name of this field.
-     */
-    name: 'events'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'Event' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? (NexusCore.NexusListDef<'Event'> | NexusCore.NexusNonNullDef<'Event'>)
-    : 'Warning/Error: The type \'Event\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Event\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'User', 'events'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.rsvps`.
-    *
-    * ### ️⚠️ You have not writen documentation for model User
-    *
-    * Replace this default advisory JSDoc with your own documentation about model User
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model User {
-    *   /// Lorem ipsum dolor sit amet.
-    *   rsvps  UsersInEvents
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { User } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: User.$name
-    *   description: User.$description
-    *   definition(t) {
-    *     t.field(User.rsvps)
-    *   }
-    * })
-    */
-  rsvps: {
-    /**
-     * The name of this field.
-     */
-    name: 'rsvps'
+    name: 'attendance'
   
     /**
      * The type of this field.
@@ -510,7 +510,7 @@ export interface User {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'User', 'rsvps'>
+    resolve: NexusCore.FieldResolver<'User', 'attendance'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.badges`.
@@ -565,7 +565,7 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'badges'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.interests`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.events`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     *
@@ -574,7 +574,7 @@ export interface User {
     * ```prisma
     * model User {
     *   /// Lorem ipsum dolor sit amet.
-    *   interests  CategoriesOnUsers
+    *   events  Event
     * }
     * ```
     *
@@ -589,22 +589,22 @@ export interface User {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.interests)
+    *     t.field(User.events)
     *   }
     * })
     */
-  interests: {
+  events: {
     /**
      * The name of this field.
      */
-    name: 'interests'
+    name: 'events'
   
     /**
      * The type of this field.
      */
-    type: 'CategoriesOnUsers' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? (NexusCore.NexusListDef<'CategoriesOnUsers'> | NexusCore.NexusNonNullDef<'CategoriesOnUsers'>)
-    : 'Warning/Error: The type \'CategoriesOnUsers\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'CategoriesOnUsers\' to your GraphQL API.'
+    type: 'Event' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? (NexusCore.NexusListDef<'Event'> | NexusCore.NexusNonNullDef<'Event'>)
+    : 'Warning/Error: The type \'Event\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Event\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -614,7 +614,7 @@ export interface User {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'User', 'interests'>
+    resolve: NexusCore.FieldResolver<'User', 'events'>
   }
 }
 
@@ -702,6 +702,110 @@ export interface Event {
      * The resolver of this field
      */
     resolve: NexusCore.FieldResolver<'Event', 'id'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Event.createdAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Event
+    *
+    * Replace this default advisory JSDoc with your own documentation about model Event
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model Event {
+    *   /// Lorem ipsum dolor sit amet.
+    *   createdAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Event } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Event.$name
+    *   description: Event.$description
+    *   definition(t) {
+    *     t.field(Event.createdAt)
+    *   }
+    * })
+    */
+  createdAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'createdAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Event', 'createdAt'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Event.updatedAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Event
+    *
+    * Replace this default advisory JSDoc with your own documentation about model Event
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model Event {
+    *   /// Lorem ipsum dolor sit amet.
+    *   updatedAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Event } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Event.$name
+    *   description: Event.$description
+    *   definition(t) {
+    *     t.field(Event.updatedAt)
+    *   }
+    * })
+    */
+  updatedAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'updatedAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Event', 'updatedAt'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Event.name`.
@@ -1120,7 +1224,7 @@ export interface Event {
     resolve: NexusCore.FieldResolver<'Event', 'host'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Event.rsvps`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Event.attendance`.
     *
     * ### ️⚠️ You have not writen documentation for model Event
     *
@@ -1129,7 +1233,7 @@ export interface Event {
     * ```prisma
     * model Event {
     *   /// Lorem ipsum dolor sit amet.
-    *   rsvps  UsersInEvents
+    *   attendance  UsersInEvents
     * }
     * ```
     *
@@ -1144,15 +1248,15 @@ export interface Event {
     *   name: Event.$name
     *   description: Event.$description
     *   definition(t) {
-    *     t.field(Event.rsvps)
+    *     t.field(Event.attendance)
     *   }
     * })
     */
-  rsvps: {
+  attendance: {
     /**
      * The name of this field.
      */
-    name: 'rsvps'
+    name: 'attendance'
   
     /**
      * The type of this field.
@@ -1169,10 +1273,10 @@ export interface Event {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'Event', 'rsvps'>
+    resolve: NexusCore.FieldResolver<'Event', 'attendance'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Event.tags`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Event.categories`.
     *
     * ### ️⚠️ You have not writen documentation for model Event
     *
@@ -1181,7 +1285,7 @@ export interface Event {
     * ```prisma
     * model Event {
     *   /// Lorem ipsum dolor sit amet.
-    *   tags  CategoriesOnEvents
+    *   categories  CategoriesOnEvents
     * }
     * ```
     *
@@ -1196,15 +1300,15 @@ export interface Event {
     *   name: Event.$name
     *   description: Event.$description
     *   definition(t) {
-    *     t.field(Event.tags)
+    *     t.field(Event.categories)
     *   }
     * })
     */
-  tags: {
+  categories: {
     /**
      * The name of this field.
      */
-    name: 'tags'
+    name: 'categories'
   
     /**
      * The type of this field.
@@ -1221,7 +1325,7 @@ export interface Event {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'Event', 'tags'>
+    resolve: NexusCore.FieldResolver<'Event', 'categories'>
   }
 }
 
@@ -1309,6 +1413,110 @@ export interface Category {
      * The resolver of this field
      */
     resolve: NexusCore.FieldResolver<'Category', 'id'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Category.createdAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Category
+    *
+    * Replace this default advisory JSDoc with your own documentation about model Category
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model Category {
+    *   /// Lorem ipsum dolor sit amet.
+    *   createdAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Category } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Category.$name
+    *   description: Category.$description
+    *   definition(t) {
+    *     t.field(Category.createdAt)
+    *   }
+    * })
+    */
+  createdAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'createdAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Category', 'createdAt'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Category.updatedAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Category
+    *
+    * Replace this default advisory JSDoc with your own documentation about model Category
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model Category {
+    *   /// Lorem ipsum dolor sit amet.
+    *   updatedAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Category } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Category.$name
+    *   description: Category.$description
+    *   definition(t) {
+    *     t.field(Category.updatedAt)
+    *   }
+    * })
+    */
+  updatedAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'updatedAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Category', 'updatedAt'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Category.name`.
@@ -1415,7 +1623,7 @@ export interface Category {
     resolve: NexusCore.FieldResolver<'Category', 'desc'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Category.onUsers`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Category.userAttributions`.
     *
     * ### ️⚠️ You have not writen documentation for model Category
     *
@@ -1424,7 +1632,7 @@ export interface Category {
     * ```prisma
     * model Category {
     *   /// Lorem ipsum dolor sit amet.
-    *   onUsers  CategoriesOnUsers
+    *   userAttributions  CategoriesOnUsers
     * }
     * ```
     *
@@ -1439,15 +1647,15 @@ export interface Category {
     *   name: Category.$name
     *   description: Category.$description
     *   definition(t) {
-    *     t.field(Category.onUsers)
+    *     t.field(Category.userAttributions)
     *   }
     * })
     */
-  onUsers: {
+  userAttributions: {
     /**
      * The name of this field.
      */
-    name: 'onUsers'
+    name: 'userAttributions'
   
     /**
      * The type of this field.
@@ -1464,10 +1672,10 @@ export interface Category {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'Category', 'onUsers'>
+    resolve: NexusCore.FieldResolver<'Category', 'userAttributions'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Category.onEvets`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Category.eventAttributions`.
     *
     * ### ️⚠️ You have not writen documentation for model Category
     *
@@ -1476,7 +1684,7 @@ export interface Category {
     * ```prisma
     * model Category {
     *   /// Lorem ipsum dolor sit amet.
-    *   onEvets  CategoriesOnEvents
+    *   eventAttributions  CategoriesOnEvents
     * }
     * ```
     *
@@ -1491,15 +1699,15 @@ export interface Category {
     *   name: Category.$name
     *   description: Category.$description
     *   definition(t) {
-    *     t.field(Category.onEvets)
+    *     t.field(Category.eventAttributions)
     *   }
     * })
     */
-  onEvets: {
+  eventAttributions: {
     /**
      * The name of this field.
      */
-    name: 'onEvets'
+    name: 'eventAttributions'
   
     /**
      * The type of this field.
@@ -1516,7 +1724,7 @@ export interface Category {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'Category', 'onEvets'>
+    resolve: NexusCore.FieldResolver<'Category', 'eventAttributions'>
   }
 }
 
@@ -1604,6 +1812,110 @@ export interface Badge {
      * The resolver of this field
      */
     resolve: NexusCore.FieldResolver<'Badge', 'id'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Badge.createdAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Badge
+    *
+    * Replace this default advisory JSDoc with your own documentation about model Badge
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model Badge {
+    *   /// Lorem ipsum dolor sit amet.
+    *   createdAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Badge } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Badge.$name
+    *   description: Badge.$description
+    *   definition(t) {
+    *     t.field(Badge.createdAt)
+    *   }
+    * })
+    */
+  createdAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'createdAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Badge', 'createdAt'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Badge.updatedAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Badge
+    *
+    * Replace this default advisory JSDoc with your own documentation about model Badge
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model Badge {
+    *   /// Lorem ipsum dolor sit amet.
+    *   updatedAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Badge } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Badge.$name
+    *   description: Badge.$description
+    *   definition(t) {
+    *     t.field(Badge.updatedAt)
+    *   }
+    * })
+    */
+  updatedAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'updatedAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Badge', 'updatedAt'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `Badge.name`.
@@ -2354,301 +2666,6 @@ export interface CategoriesOnUsers {
 }
 
 /**
-  * Generated Nexus `objectType` configuration based on your Prisma schema's model `UsersInEvents`.
-  *
-  * ### ️⚠️ You have not writen documentation for model UsersInEvents
-  *
-  * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
-  * by documenting it in your Prisma schema. For example:
-  *
-  * ```prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model UsersInEvents {
-  *   foo  String
-  * }
-  * ```
-  *
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { UsersInEvents } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: UsersInEvents.$name
-  *   description: UsersInEvents.$description
-  *   definition(t) {
-  *     t.field(UsersInEvents.id)
-  *   }
-  * })
-  */
-export interface UsersInEvents {
-  $name: 'UsersInEvents'
-  $description: undefined
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.user`.
-    *
-    * ### ️⚠️ You have not writen documentation for model UsersInEvents
-    *
-    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model UsersInEvents {
-    *   /// Lorem ipsum dolor sit amet.
-    *   user  User
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { UsersInEvents } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: UsersInEvents.$name
-    *   description: UsersInEvents.$description
-    *   definition(t) {
-    *     t.field(UsersInEvents.user)
-    *   }
-    * })
-    */
-  user: {
-    /**
-     * The name of this field.
-     */
-    name: 'user'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'User' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'User'>
-    : 'Warning/Error: The type \'User\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'User\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'UsersInEvents', 'user'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.userId`.
-    *
-    * ### ️⚠️ You have not writen documentation for model UsersInEvents
-    *
-    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model UsersInEvents {
-    *   /// Lorem ipsum dolor sit amet.
-    *   userId  String
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { UsersInEvents } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: UsersInEvents.$name
-    *   description: UsersInEvents.$description
-    *   definition(t) {
-    *     t.field(UsersInEvents.userId)
-    *   }
-    * })
-    */
-  userId: {
-    /**
-     * The name of this field.
-     */
-    name: 'userId'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'String'>
-    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'UsersInEvents', 'userId'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.event`.
-    *
-    * ### ️⚠️ You have not writen documentation for model UsersInEvents
-    *
-    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model UsersInEvents {
-    *   /// Lorem ipsum dolor sit amet.
-    *   event  Event
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { UsersInEvents } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: UsersInEvents.$name
-    *   description: UsersInEvents.$description
-    *   definition(t) {
-    *     t.field(UsersInEvents.event)
-    *   }
-    * })
-    */
-  event: {
-    /**
-     * The name of this field.
-     */
-    name: 'event'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'Event' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'Event'>
-    : 'Warning/Error: The type \'Event\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Event\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'UsersInEvents', 'event'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.eventId`.
-    *
-    * ### ️⚠️ You have not writen documentation for model UsersInEvents
-    *
-    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model UsersInEvents {
-    *   /// Lorem ipsum dolor sit amet.
-    *   eventId  String
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { UsersInEvents } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: UsersInEvents.$name
-    *   description: UsersInEvents.$description
-    *   definition(t) {
-    *     t.field(UsersInEvents.eventId)
-    *   }
-    * })
-    */
-  eventId: {
-    /**
-     * The name of this field.
-     */
-    name: 'eventId'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'String'>
-    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'UsersInEvents', 'eventId'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.createdAt`.
-    *
-    * ### ️⚠️ You have not writen documentation for model UsersInEvents
-    *
-    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model UsersInEvents {
-    *   /// Lorem ipsum dolor sit amet.
-    *   createdAt  DateTime
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { UsersInEvents } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: UsersInEvents.$name
-    *   description: UsersInEvents.$description
-    *   definition(t) {
-    *     t.field(UsersInEvents.createdAt)
-    *   }
-    * })
-    */
-  createdAt: {
-    /**
-     * The name of this field.
-     */
-    name: 'createdAt'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'DateTime'>
-    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'UsersInEvents', 'createdAt'>
-  }
-}
-
-/**
   * Generated Nexus `objectType` configuration based on your Prisma schema's model `BadgesOnUsers`.
   *
   * ### ️⚠️ You have not writen documentation for model BadgesOnUsers
@@ -2943,6 +2960,301 @@ export interface BadgesOnUsers {
   }
 }
 
+/**
+  * Generated Nexus `objectType` configuration based on your Prisma schema's model `UsersInEvents`.
+  *
+  * ### ️⚠️ You have not writen documentation for model UsersInEvents
+  *
+  * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
+  * by documenting it in your Prisma schema. For example:
+  *
+  * ```prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model UsersInEvents {
+  *   foo  String
+  * }
+  * ```
+  *
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { UsersInEvents } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: UsersInEvents.$name
+  *   description: UsersInEvents.$description
+  *   definition(t) {
+  *     t.field(UsersInEvents.id)
+  *   }
+  * })
+  */
+export interface UsersInEvents {
+  $name: 'UsersInEvents'
+  $description: undefined
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.user`.
+    *
+    * ### ️⚠️ You have not writen documentation for model UsersInEvents
+    *
+    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model UsersInEvents {
+    *   /// Lorem ipsum dolor sit amet.
+    *   user  User
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { UsersInEvents } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: UsersInEvents.$name
+    *   description: UsersInEvents.$description
+    *   definition(t) {
+    *     t.field(UsersInEvents.user)
+    *   }
+    * })
+    */
+  user: {
+    /**
+     * The name of this field.
+     */
+    name: 'user'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'User' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'User'>
+    : 'Warning/Error: The type \'User\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'User\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'UsersInEvents', 'user'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.userId`.
+    *
+    * ### ️⚠️ You have not writen documentation for model UsersInEvents
+    *
+    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model UsersInEvents {
+    *   /// Lorem ipsum dolor sit amet.
+    *   userId  String
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { UsersInEvents } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: UsersInEvents.$name
+    *   description: UsersInEvents.$description
+    *   definition(t) {
+    *     t.field(UsersInEvents.userId)
+    *   }
+    * })
+    */
+  userId: {
+    /**
+     * The name of this field.
+     */
+    name: 'userId'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'String'>
+    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'UsersInEvents', 'userId'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.event`.
+    *
+    * ### ️⚠️ You have not writen documentation for model UsersInEvents
+    *
+    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model UsersInEvents {
+    *   /// Lorem ipsum dolor sit amet.
+    *   event  Event
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { UsersInEvents } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: UsersInEvents.$name
+    *   description: UsersInEvents.$description
+    *   definition(t) {
+    *     t.field(UsersInEvents.event)
+    *   }
+    * })
+    */
+  event: {
+    /**
+     * The name of this field.
+     */
+    name: 'event'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Event' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Event'>
+    : 'Warning/Error: The type \'Event\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Event\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'UsersInEvents', 'event'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.eventId`.
+    *
+    * ### ️⚠️ You have not writen documentation for model UsersInEvents
+    *
+    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model UsersInEvents {
+    *   /// Lorem ipsum dolor sit amet.
+    *   eventId  String
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { UsersInEvents } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: UsersInEvents.$name
+    *   description: UsersInEvents.$description
+    *   definition(t) {
+    *     t.field(UsersInEvents.eventId)
+    *   }
+    * })
+    */
+  eventId: {
+    /**
+     * The name of this field.
+     */
+    name: 'eventId'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'String'>
+    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'UsersInEvents', 'eventId'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `UsersInEvents.createdAt`.
+    *
+    * ### ️⚠️ You have not writen documentation for model UsersInEvents
+    *
+    * Replace this default advisory JSDoc with your own documentation about model UsersInEvents
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model UsersInEvents {
+    *   /// Lorem ipsum dolor sit amet.
+    *   createdAt  DateTime
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { UsersInEvents } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: UsersInEvents.$name
+    *   description: UsersInEvents.$description
+    *   definition(t) {
+    *     t.field(UsersInEvents.createdAt)
+    *   }
+    * })
+    */
+  createdAt: {
+    /**
+     * The name of this field.
+     */
+    name: 'createdAt'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'UsersInEvents', 'createdAt'>
+  }
+}
+
 // Enums
 
 /**
@@ -3009,9 +3321,9 @@ export const CategoriesOnEvents: CategoriesOnEvents
 
 export const CategoriesOnUsers: CategoriesOnUsers
 
-export const UsersInEvents: UsersInEvents
-
 export const BadgesOnUsers: BadgesOnUsers
+
+export const UsersInEvents: UsersInEvents
 
 //
 //

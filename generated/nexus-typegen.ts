@@ -5,6 +5,7 @@
 
 
 import type { Context } from "./../src/context"
+import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { core, connectionPluginCore } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -27,7 +28,7 @@ declare global {
      */
     connectionField<FieldName extends string>(
       fieldName: FieldName,
-      config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName>
+      config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName> & { totalCount: connectionPluginCore.ConnectionFieldResolver<TypeName, FieldName, "totalCount"> }
     ): void
   }
 }
@@ -53,17 +54,87 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Event: { // root type
+  Badge: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    desc: string; // String!
     id: string; // ID!
     name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  BadgeConnection: { // root type
+    edges?: Array<NexusGenRootTypes['BadgeEdge'] | null> | null; // [BadgeEdge]
+    nodes?: Array<NexusGenRootTypes['Badge'] | null> | null; // [Badge]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount?: number | null; // Int
+  }
+  BadgeEdge: { // root type
+    cursor: string; // String!
+    node?: NexusGenRootTypes['Badge'] | null; // Badge
+  }
+  Category: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    desc: string; // String!
+    id: string; // ID!
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  CategoryConnection: { // root type
+    edges?: Array<NexusGenRootTypes['CategoryEdge'] | null> | null; // [CategoryEdge]
+    nodes?: Array<NexusGenRootTypes['Category'] | null> | null; // [Category]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount?: number | null; // Int
+  }
+  CategoryEdge: { // root type
+    cursor: string; // String!
+    node?: NexusGenRootTypes['Category'] | null; // Category
+  }
+  Event: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    desc?: string | null; // String
+    end?: NexusGenScalars['DateTime'] | null; // DateTime
+    hostId: string; // String!
+    id: string; // ID!
+    lat: number; // Float!
+    lng: number; // Float!
+    name: string; // String!
+    start: NexusGenScalars['DateTime']; // DateTime!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  EventConnection: { // root type
+    edges?: Array<NexusGenRootTypes['EventEdge'] | null> | null; // [EventEdge]
+    nodes?: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount?: number | null; // Int
+  }
+  EventEdge: { // root type
+    cursor: string; // String!
+    node?: NexusGenRootTypes['Event'] | null; // Event
   }
   HelloWorld: {};
+  PageInfo: { // root type
+    endCursor?: string | null; // String
+    hasNextPage: boolean; // Boolean!
+    hasPreviousPage: boolean; // Boolean!
+    startCursor?: string | null; // String
+  }
   Query: {};
   User: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
-    id: string; // String!
+    id: string; // ID!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
+    verified: boolean; // Boolean!
+  }
+  UserConnection: { // root type
+    edges?: Array<NexusGenRootTypes['UserEdge'] | null> | null; // [UserEdge]
+    nodes?: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount?: number | null; // Int
+  }
+  UserEdge: { // root type
+    cursor: string; // String!
+    node?: NexusGenRootTypes['User'] | null; // User
   }
 }
 
@@ -78,60 +149,294 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  Event: { // field return type
-    host: NexusGenRootTypes['User']; // User!
+  Badge: { // field return type
+    attributedUsers: NexusGenRootTypes['UserConnection'] | null; // UserConnection
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    desc: string; // String!
     id: string; // ID!
     name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  BadgeConnection: { // field return type
+    edges: Array<NexusGenRootTypes['BadgeEdge'] | null> | null; // [BadgeEdge]
+    nodes: Array<NexusGenRootTypes['Badge'] | null> | null; // [Badge]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount: number | null; // Int
+  }
+  BadgeEdge: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['Badge'] | null; // Badge
+  }
+  Category: { // field return type
+    attributedEvents: NexusGenRootTypes['EventConnection'] | null; // EventConnection
+    attributedUsers: NexusGenRootTypes['UserConnection'] | null; // UserConnection
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    desc: string; // String!
+    id: string; // ID!
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  CategoryConnection: { // field return type
+    edges: Array<NexusGenRootTypes['CategoryEdge'] | null> | null; // [CategoryEdge]
+    nodes: Array<NexusGenRootTypes['Category'] | null> | null; // [Category]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount: number | null; // Int
+  }
+  CategoryEdge: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['Category'] | null; // Category
+  }
+  Event: { // field return type
+    attendees: NexusGenRootTypes['UserConnection'] | null; // UserConnection
+    categories: NexusGenRootTypes['CategoryConnection'] | null; // CategoryConnection
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    desc: string | null; // String
+    end: NexusGenScalars['DateTime'] | null; // DateTime
+    host: NexusGenRootTypes['User']; // User!
+    hostId: string; // String!
+    id: string; // ID!
+    lat: number; // Float!
+    lng: number; // Float!
+    name: string; // String!
+    start: NexusGenScalars['DateTime']; // DateTime!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  EventConnection: { // field return type
+    edges: Array<NexusGenRootTypes['EventEdge'] | null> | null; // [EventEdge]
+    nodes: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount: number | null; // Int
+  }
+  EventEdge: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['Event'] | null; // Event
   }
   HelloWorld: { // field return type
     speak: string | null; // String
   }
+  PageInfo: { // field return type
+    endCursor: string | null; // String
+    hasNextPage: boolean; // Boolean!
+    hasPreviousPage: boolean; // Boolean!
+    startCursor: string | null; // String
+  }
   Query: { // field return type
+    badge: NexusGenRootTypes['Badge'] | null; // Badge
+    badges: Array<NexusGenRootTypes['Badge'] | null>; // [Badge]!
+    categories: Array<NexusGenRootTypes['Category'] | null>; // [Category]!
+    category: NexusGenRootTypes['Category'] | null; // Category
     event: NexusGenRootTypes['Event'] | null; // Event
+    events: Array<NexusGenRootTypes['Event'] | null>; // [Event]!
     helloWorld: NexusGenRootTypes['HelloWorld'] | null; // HelloWorld
     user: NexusGenRootTypes['User'] | null; // User
+    users: Array<NexusGenRootTypes['User'] | null>; // [User]!
   }
   User: { // field return type
+    attendance: NexusGenRootTypes['EventConnection'] | null; // EventConnection
+    attributedCategories: NexusGenRootTypes['CategoryConnection'] | null; // CategoryConnection
+    badges: NexusGenRootTypes['BadgeConnection'] | null; // BadgeConnection
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
-    events: NexusGenRootTypes['Event'][]; // [Event!]!
-    eventsCount: number; // Int!
-    id: string; // String!
+    events: NexusGenRootTypes['EventConnection'] | null; // EventConnection
+    id: string; // ID!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
+    verified: boolean; // Boolean!
+  }
+  UserConnection: { // field return type
+    edges: Array<NexusGenRootTypes['UserEdge'] | null> | null; // [UserEdge]
+    nodes: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+    totalCount: number | null; // Int
+  }
+  UserEdge: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['User'] | null; // User
   }
 }
 
 export interface NexusGenFieldTypeNames {
-  Event: { // field return type name
-    host: 'User'
+  Badge: { // field return type name
+    attributedUsers: 'UserConnection'
+    createdAt: 'DateTime'
+    desc: 'String'
     id: 'ID'
     name: 'String'
+    updatedAt: 'DateTime'
+  }
+  BadgeConnection: { // field return type name
+    edges: 'BadgeEdge'
+    nodes: 'Badge'
+    pageInfo: 'PageInfo'
+    totalCount: 'Int'
+  }
+  BadgeEdge: { // field return type name
+    cursor: 'String'
+    node: 'Badge'
+  }
+  Category: { // field return type name
+    attributedEvents: 'EventConnection'
+    attributedUsers: 'UserConnection'
+    createdAt: 'DateTime'
+    desc: 'String'
+    id: 'ID'
+    name: 'String'
+    updatedAt: 'DateTime'
+  }
+  CategoryConnection: { // field return type name
+    edges: 'CategoryEdge'
+    nodes: 'Category'
+    pageInfo: 'PageInfo'
+    totalCount: 'Int'
+  }
+  CategoryEdge: { // field return type name
+    cursor: 'String'
+    node: 'Category'
+  }
+  Event: { // field return type name
+    attendees: 'UserConnection'
+    categories: 'CategoryConnection'
+    createdAt: 'DateTime'
+    desc: 'String'
+    end: 'DateTime'
+    host: 'User'
+    hostId: 'String'
+    id: 'ID'
+    lat: 'Float'
+    lng: 'Float'
+    name: 'String'
+    start: 'DateTime'
+    updatedAt: 'DateTime'
+  }
+  EventConnection: { // field return type name
+    edges: 'EventEdge'
+    nodes: 'Event'
+    pageInfo: 'PageInfo'
+    totalCount: 'Int'
+  }
+  EventEdge: { // field return type name
+    cursor: 'String'
+    node: 'Event'
   }
   HelloWorld: { // field return type name
     speak: 'String'
   }
+  PageInfo: { // field return type name
+    endCursor: 'String'
+    hasNextPage: 'Boolean'
+    hasPreviousPage: 'Boolean'
+    startCursor: 'String'
+  }
   Query: { // field return type name
+    badge: 'Badge'
+    badges: 'Badge'
+    categories: 'Category'
+    category: 'Category'
     event: 'Event'
+    events: 'Event'
     helloWorld: 'HelloWorld'
     user: 'User'
+    users: 'User'
   }
   User: { // field return type name
+    attendance: 'EventConnection'
+    attributedCategories: 'CategoryConnection'
+    badges: 'BadgeConnection'
     createdAt: 'DateTime'
     email: 'String'
-    events: 'Event'
-    eventsCount: 'Int'
-    id: 'String'
+    events: 'EventConnection'
+    id: 'ID'
+    updatedAt: 'DateTime'
     username: 'String'
+    verified: 'Boolean'
+  }
+  UserConnection: { // field return type name
+    edges: 'UserEdge'
+    nodes: 'User'
+    pageInfo: 'PageInfo'
+    totalCount: 'Int'
+  }
+  UserEdge: { // field return type name
+    cursor: 'String'
+    node: 'User'
   }
 }
 
 export interface NexusGenArgTypes {
+  Badge: {
+    attributedUsers: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+  }
+  Category: {
+    attributedEvents: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    attributedUsers: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+  }
+  Event: {
+    attendees: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    categories: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+  }
   Query: {
+    badge: { // args
+      id: string; // String!
+    }
+    category: { // args
+      id: string; // String!
+    }
     event: { // args
       id: string; // String!
     }
     user: { // args
       id: string; // String!
+    }
+  }
+  User: {
+    attendance: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    attributedCategories: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    badges: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    events: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
   }
 }
@@ -199,6 +504,15 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+    /**
+     * Authorization for an individual field. Returning "true"
+     * or "Promise<true>" means the field can be accessed.
+     * Returning "false" or "Promise<false>" will respond
+     * with a "Not Authorized" error for the field.
+     * Returning or throwing an error will also prevent the
+     * resolver from executing.
+     */
+    authorize?: FieldAuthorizeResolver<TypeName, FieldName>
     
   }
   interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
