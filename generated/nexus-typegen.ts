@@ -247,6 +247,8 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     events: NexusGenRootTypes['EventConnection'] | null; // EventConnection
+    followers: NexusGenRootTypes['UserConnection'] | null; // UserConnection
+    following: NexusGenRootTypes['UserConnection'] | null; // UserConnection
     id: string; // ID!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string | null; // String
@@ -359,6 +361,8 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'DateTime'
     email: 'String'
     events: 'EventConnection'
+    followers: 'UserConnection'
+    following: 'UserConnection'
     id: 'ID'
     updatedAt: 'DateTime'
     username: 'String'
@@ -469,6 +473,18 @@ export interface NexusGenArgTypes {
       last?: number | null; // Int
     }
     events: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    followers: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    following: { // args
       after?: string | null; // String
       before?: string | null; // String
       first?: number | null; // Int

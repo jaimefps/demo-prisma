@@ -30,6 +30,8 @@ model User {
   attendance UsersInEvents[]
   badges     BadgesOnUsers[]
   events     Event[]
+  following  Fandom[]            @relation("fan")
+  followers  Fandom[]            @relation("target")
 }
 
 model Event {
@@ -111,4 +113,14 @@ model UsersInEvents {
 
   createdAt DateTime @default(now())
   @@id([userId, eventId])
+}
+
+model Fandom {
+  fan      User   @relation(name: "fan", fields: [fanId], references: [id], onDelete: Cascade)
+  fanId    String
+  target   User   @relation(name: "target", fields: [targetId], references: [id], onDelete: Cascade)
+  targetId String
+
+  createdAt DateTime @default(now())
+  @@id([fanId, targetId])
 }

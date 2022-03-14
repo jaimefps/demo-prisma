@@ -2,7 +2,6 @@ import { User, Event, Category, Badge } from "../generated/nexus-prisma"
 import { userCanMutateEvent } from "./data-sources/user"
 import { DateTimeResolver } from "graphql-scalars"
 import { GraphQLScalarType } from "graphql"
-import { desc, lat, lng, name } from "./validations/event"
 import {
   asNexusMethod,
   floatArg,
@@ -273,6 +272,48 @@ export const UserType = objectType({
         })
       }
     })
+    t.connectionField("followers", {
+      type: UserType,
+      nodes(parent, args, ctx) {
+        return ctx.prisma.user.findMany({
+          where: {
+            following: {
+              some: {
+                target: {
+                  id: parent.id
+                }
+              }
+            }
+          }
+        })
+      },
+      totalCount(parent, args, ctx) {
+        return ctx.prisma.fandom.count({
+          where: { targetId: parent.id }
+        })
+      }
+    })
+    t.connectionField("following", {
+      type: UserType,
+      nodes(parent, args, ctx) {
+        return ctx.prisma.user.findMany({
+          where: {
+            followers: {
+              some: {
+                fan: {
+                  id: parent.id
+                }
+              }
+            }
+          }
+        })
+      },
+      totalCount(parent, args, ctx) {
+        return ctx.prisma.fandom.count({
+          where: { fanId: parent.id }
+        })
+      }
+    })
   }
 })
 
@@ -366,18 +407,6 @@ export const createEvent = mutationField("createEvent", {
     start: stringArg(),
     end: stringArg()
   },
-  /**
-   * TODO: start moving types into schema files.
-   * Sample validations.
-   */
-  validate() {
-    return {
-      name: name,
-      desc: desc,
-      lat: lat,
-      lng: lng
-    }
-  },
   async resolve(_, args, ctx) {
     const clientInfo = await ctx.clientInfo()
     if (clientInfo) {
@@ -403,30 +432,6 @@ export const createEvent = mutationField("createEvent", {
   }
 })
 
-export const deleteEvent = mutationField("deleteEvent", {
-  type: "Boolean",
-  args: {
-    eventId: stringArg()
-  },
-  async authorize(_, args, ctx) {
-    const clientInfo = await ctx.clientInfo()
-    return userCanMutateEvent({
-      eventId: args.eventId,
-      userId: clientInfo?.id
-    })
-  },
-  async resolve(_, args, ctx) {
-    try {
-      await ctx.prisma.event.delete({
-        where: { id: args.eventId }
-      })
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-})
-
 export const updateEvent = mutationField("updateEvent", {
   type: "Boolean",
   args: {
@@ -443,13 +448,37 @@ export const updateEvent = mutationField("updateEvent", {
       await ctx.prisma.event.update({
         where: { id: args.eventId },
         data: {
+          start: new Date(args.start),
+          end: new Date(args.end),
           name: args.name,
           desc: args.desc,
           lat: args.lat,
-          lng: args.lng,
-          start: args.start,
-          end: args.end
+          lng: args.lng
         }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const deleteEvent = mutationField("deleteEvent", {
+  type: "Boolean",
+  args: {
+    eventId: stringArg()
+  },
+  async authorize(_, args, ctx) {
+    const clientInfo = await ctx.clientInfo()
+    return userCanMutateEvent({
+      eventId: args.eventId,
+      userId: clientInfo?.id
+    })
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.event.delete({
+        where: { id: args.eventId }
       })
       return true
     } catch (e) {
