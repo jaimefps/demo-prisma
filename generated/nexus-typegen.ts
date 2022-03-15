@@ -127,7 +127,7 @@ export interface NexusGenObjects {
     email: string; // String!
     id: string; // ID!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    username?: string | null; // String
+    username: string; // String!
     verified: boolean; // Boolean!
   }
   UserConnection: { // root type
@@ -231,27 +231,28 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     badge: NexusGenRootTypes['Badge'] | null; // Badge
-    badges: Array<NexusGenRootTypes['Badge'] | null>; // [Badge]!
-    categories: Array<NexusGenRootTypes['Category'] | null>; // [Category]!
+    badges: Array<NexusGenRootTypes['Badge'] | null> | null; // [Badge]
+    categories: Array<NexusGenRootTypes['Category'] | null> | null; // [Category]
     category: NexusGenRootTypes['Category'] | null; // Category
     event: NexusGenRootTypes['Event'] | null; // Event
-    events: Array<NexusGenRootTypes['Event'] | null>; // [Event]!
+    events: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
     helloWorld: NexusGenRootTypes['HelloWorld'] | null; // HelloWorld
     user: NexusGenRootTypes['User'] | null; // User
-    users: Array<NexusGenRootTypes['User'] | null>; // [User]!
+    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   User: { // field return type
-    attendance: NexusGenRootTypes['EventConnection'] | null; // EventConnection
+    attending: NexusGenRootTypes['EventConnection'] | null; // EventConnection
     attributedCategories: NexusGenRootTypes['CategoryConnection'] | null; // CategoryConnection
     badges: NexusGenRootTypes['BadgeConnection'] | null; // BadgeConnection
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
-    events: NexusGenRootTypes['EventConnection'] | null; // EventConnection
+    events: NexusGenRootTypes['Event'][]; // [Event!]!
     followers: NexusGenRootTypes['UserConnection'] | null; // UserConnection
     following: NexusGenRootTypes['UserConnection'] | null; // UserConnection
+    hosting: NexusGenRootTypes['EventConnection'] | null; // EventConnection
     id: string; // ID!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    username: string | null; // String
+    username: string; // String!
     verified: boolean; // Boolean!
   }
   UserConnection: { // field return type
@@ -355,14 +356,15 @@ export interface NexusGenFieldTypeNames {
     users: 'User'
   }
   User: { // field return type name
-    attendance: 'EventConnection'
+    attending: 'EventConnection'
     attributedCategories: 'CategoryConnection'
     badges: 'BadgeConnection'
     createdAt: 'DateTime'
     email: 'String'
-    events: 'EventConnection'
+    events: 'Event'
     followers: 'UserConnection'
     following: 'UserConnection'
+    hosting: 'EventConnection'
     id: 'ID'
     updatedAt: 'DateTime'
     username: 'String'
@@ -454,7 +456,7 @@ export interface NexusGenArgTypes {
     }
   }
   User: {
-    attendance: { // args
+    attending: { // args
       after?: string | null; // String
       before?: string | null; // String
       first?: number | null; // Int
@@ -472,12 +474,6 @@ export interface NexusGenArgTypes {
       first?: number | null; // Int
       last?: number | null; // Int
     }
-    events: { // args
-      after?: string | null; // String
-      before?: string | null; // String
-      first?: number | null; // Int
-      last?: number | null; // Int
-    }
     followers: { // args
       after?: string | null; // String
       before?: string | null; // String
@@ -485,6 +481,12 @@ export interface NexusGenArgTypes {
       last?: number | null; // Int
     }
     following: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    hosting: { // args
       after?: string | null; // String
       before?: string | null; // String
       first?: number | null; // Int

@@ -1,4 +1,4 @@
-import { prisma } from "../context"
+import { prisma } from "../prisma"
 
 export const userCanMutateEvent = async ({
   eventId,

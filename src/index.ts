@@ -1,7 +1,7 @@
 import { makeSchema, connectionPlugin, fieldAuthorizePlugin } from "nexus"
 import { validatePlugin } from "nexus-validate"
+import * as SchemaTypes from "./schema-types"
 import { ApolloServer } from "apollo-server"
-import * as SchemaTypes from "./types"
 import { Context } from "./context"
 import path, { join } from "path"
 
@@ -19,11 +19,8 @@ const schema = makeSchema({
     fieldAuthorizePlugin(),
     connectionPlugin({
       validateArgs(args, info) {
-        /**
-         * TODO: Review and update
-         * connection validation for
-         * pagination pattens.
-         */
+        // TODO: Review and update "connection
+        // validations" for pagination patterns.
         return true
       },
       includeNodesField: true,
@@ -41,9 +38,10 @@ const schema = makeSchema({
 
 const server = new ApolloServer({
   context: async ({ req, res }) => {
-    // use req & res here for auth and metrics analysis:
-    async function findOrCreateUser() {}
-    return new Context()
+    // maybe use req & res here for auth and metrics analysis:
+    // async function findOrCreateUser() {}
+    // const user = await findOrCreateUser()
+    return new Context(/* user */)
   },
   cors: true,
   schema

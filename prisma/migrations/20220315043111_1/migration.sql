@@ -1,15 +1,15 @@
 -- CreateEnum
-CREATE TYPE "AccountType" AS ENUM ('BASIC', 'PREMIUM');
+CREATE TYPE "AccountType" AS ENUM ('BASIC', 'PREMIUM', 'SUPERUSER');
 
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "type" "AccountType" NOT NULL DEFAULT E'BASIC',
-    "verified" BOOLEAN NOT NULL DEFAULT false,
-    "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "verified" BOOLEAN NOT NULL DEFAULT false,
+    "type" "AccountType" NOT NULL DEFAULT E'BASIC',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -88,11 +88,20 @@ CREATE TABLE "UsersInEvents" (
     CONSTRAINT "UsersInEvents_pkey" PRIMARY KEY ("userId","eventId")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+-- CreateTable
+CREATE TABLE "Fandom" (
+    "fanId" TEXT NOT NULL,
+    "targetId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Fandom_pkey" PRIMARY KEY ("fanId","targetId")
+);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- AddForeignKey
 ALTER TABLE "Event" ADD CONSTRAINT "Event_hostId_fkey" FOREIGN KEY ("hostId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -120,3 +129,9 @@ ALTER TABLE "UsersInEvents" ADD CONSTRAINT "UsersInEvents_userId_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "UsersInEvents" ADD CONSTRAINT "UsersInEvents_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Fandom" ADD CONSTRAINT "Fandom_fanId_fkey" FOREIGN KEY ("fanId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Fandom" ADD CONSTRAINT "Fandom_targetId_fkey" FOREIGN KEY ("targetId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

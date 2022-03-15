@@ -14,6 +14,7 @@ datasource db {
 enum AccountType {
   BASIC
   PREMIUM
+  SUPERUSER
 }
 
 model User {
@@ -21,10 +22,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  type     AccountType @default(BASIC)
-  verified Boolean     @default(false)
-  username String?     @unique
   email    String      @unique
+  username String      @unique
+  verified Boolean     @default(false)
+  type     AccountType @default(BASIC)
 
   categories CategoriesOnUsers[]
   attendance UsersInEvents[]

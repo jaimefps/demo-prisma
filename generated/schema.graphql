@@ -211,18 +211,18 @@ type PageInfo {
 
 type Query {
   badge(id: String!): Badge
-  badges: [Badge]!
-  categories: [Category]!
+  badges: [Badge]
+  categories: [Category]
   category(id: String!): Category
   event(id: String!): Event
-  events: [Event]!
+  events: [Event]
   helloWorld: HelloWorld
   user(id: String!): User
-  users: [User]!
+  users: [User]
 }
 
 type User {
-  attendance(
+  attending(
     """Returns the elements in the list that come after the specified cursor"""
     after: String
 
@@ -263,19 +263,7 @@ type User {
   ): BadgeConnection
   createdAt: DateTime!
   email: String!
-  events(
-    """Returns the elements in the list that come after the specified cursor"""
-    after: String
-
-    """Returns the elements in the list that come before the specified cursor"""
-    before: String
-
-    """Returns the first n elements from the list."""
-    first: Int
-
-    """Returns the last n elements from the list."""
-    last: Int
-  ): EventConnection
+  events: [Event!]!
   followers(
     """Returns the elements in the list that come after the specified cursor"""
     after: String
@@ -302,9 +290,22 @@ type User {
     """Returns the last n elements from the list."""
     last: Int
   ): UserConnection
+  hosting(
+    """Returns the elements in the list that come after the specified cursor"""
+    after: String
+
+    """Returns the elements in the list that come before the specified cursor"""
+    before: String
+
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+  ): EventConnection
   id: ID!
   updatedAt: DateTime!
-  username: String
+  username: String!
   verified: Boolean!
 }
 

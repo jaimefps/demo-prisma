@@ -201,7 +201,7 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'updatedAt'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.type`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.email`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     *
@@ -210,7 +210,7 @@ export interface User {
     * ```prisma
     * model User {
     *   /// Lorem ipsum dolor sit amet.
-    *   type  AccountType
+    *   email  String
     * }
     * ```
     *
@@ -225,22 +225,22 @@ export interface User {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.type)
+    *     t.field(User.email)
     *   }
     * })
     */
-  type: {
+  email: {
     /**
      * The name of this field.
      */
-    name: 'type'
+    name: 'email'
   
     /**
      * The type of this field.
      */
-    type: 'AccountType' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'AccountType'>
-    : 'Warning/Error: The type \'AccountType\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'AccountType\' to your GraphQL API.'
+    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'String'>
+    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -250,7 +250,59 @@ export interface User {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'User', 'type'>
+    resolve: NexusCore.FieldResolver<'User', 'email'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.username`.
+    *
+    * ### ️⚠️ You have not writen documentation for model User
+    *
+    * Replace this default advisory JSDoc with your own documentation about model User
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model User {
+    *   /// Lorem ipsum dolor sit amet.
+    *   username  String
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { User } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: User.$name
+    *   description: User.$description
+    *   definition(t) {
+    *     t.field(User.username)
+    *   }
+    * })
+    */
+  username: {
+    /**
+     * The name of this field.
+     */
+    name: 'username'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'String'>
+    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'User', 'username'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.verified`.
@@ -305,7 +357,7 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'verified'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.username`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.type`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     *
@@ -314,7 +366,7 @@ export interface User {
     * ```prisma
     * model User {
     *   /// Lorem ipsum dolor sit amet.
-    *   username  String?
+    *   type  AccountType
     * }
     * ```
     *
@@ -329,22 +381,22 @@ export interface User {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.username)
+    *     t.field(User.type)
     *   }
     * })
     */
-  username: {
+  type: {
     /**
      * The name of this field.
      */
-    name: 'username'
+    name: 'type'
   
     /**
      * The type of this field.
      */
-    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNullDef<'String'>
-    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
+    type: 'AccountType' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'AccountType'>
+    : 'Warning/Error: The type \'AccountType\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'AccountType\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -354,59 +406,7 @@ export interface User {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'User', 'username'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.email`.
-    *
-    * ### ️⚠️ You have not writen documentation for model User
-    *
-    * Replace this default advisory JSDoc with your own documentation about model User
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model User {
-    *   /// Lorem ipsum dolor sit amet.
-    *   email  String
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { User } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: User.$name
-    *   description: User.$description
-    *   definition(t) {
-    *     t.field(User.email)
-    *   }
-    * })
-    */
-  email: {
-    /**
-     * The name of this field.
-     */
-    name: 'email'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'String' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'String'>
-    : 'Warning/Error: The type \'String\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'String\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'User', 'email'>
+    resolve: NexusCore.FieldResolver<'User', 'type'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.categories`.
@@ -3669,12 +3669,13 @@ export interface Fandom {
   * enum AccountType {
   *   BASIC
   *   PREMIUM
+  *   SUPERUSER
   * }
   * ```
   *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
-  * Contains these members: BASIC, PREMIUM
+  * Contains these members: BASIC, PREMIUM, SUPERUSER
   *
   * @example
   *
@@ -3686,7 +3687,7 @@ export interface Fandom {
 export interface AccountType {
   name: 'AccountType'
   description: undefined
-  members: ['BASIC', 'PREMIUM']
+  members: ['BASIC', 'PREMIUM', 'SUPERUSER']
 }
 
 
