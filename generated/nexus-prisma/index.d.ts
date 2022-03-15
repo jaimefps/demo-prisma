@@ -409,6 +409,110 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'type'>
   }
   /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.hosting`.
+    *
+    * ### ️⚠️ You have not writen documentation for model User
+    *
+    * Replace this default advisory JSDoc with your own documentation about model User
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model User {
+    *   /// Lorem ipsum dolor sit amet.
+    *   hosting  Event
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { User } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: User.$name
+    *   description: User.$description
+    *   definition(t) {
+    *     t.field(User.hosting)
+    *   }
+    * })
+    */
+  hosting: {
+    /**
+     * The name of this field.
+     */
+    name: 'hosting'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Event' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? (NexusCore.NexusListDef<'Event'> | NexusCore.NexusNonNullDef<'Event'>)
+    : 'Warning/Error: The type \'Event\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Event\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'User', 'hosting'>
+  }
+  /**
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.attending`.
+    *
+    * ### ️⚠️ You have not writen documentation for model User
+    *
+    * Replace this default advisory JSDoc with your own documentation about model User
+    * by documenting it in your Prisma schema. For example:
+    * ```prisma
+    * model User {
+    *   /// Lorem ipsum dolor sit amet.
+    *   attending  UsersInEvents
+    * }
+    * ```
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { User } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: User.$name
+    *   description: User.$description
+    *   definition(t) {
+    *     t.field(User.attending)
+    *   }
+    * })
+    */
+  attending: {
+    /**
+     * The name of this field.
+     */
+    name: 'attending'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'UsersInEvents' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? (NexusCore.NexusListDef<'UsersInEvents'> | NexusCore.NexusNonNullDef<'UsersInEvents'>)
+    : 'Warning/Error: The type \'UsersInEvents\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'UsersInEvents\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'User', 'attending'>
+  }
+  /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.categories`.
     *
     * ### ️⚠️ You have not writen documentation for model User
@@ -459,58 +563,6 @@ export interface User {
      * The resolver of this field
      */
     resolve: NexusCore.FieldResolver<'User', 'categories'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.attendance`.
-    *
-    * ### ️⚠️ You have not writen documentation for model User
-    *
-    * Replace this default advisory JSDoc with your own documentation about model User
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model User {
-    *   /// Lorem ipsum dolor sit amet.
-    *   attendance  UsersInEvents
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { User } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: User.$name
-    *   description: User.$description
-    *   definition(t) {
-    *     t.field(User.attendance)
-    *   }
-    * })
-    */
-  attendance: {
-    /**
-     * The name of this field.
-     */
-    name: 'attendance'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'UsersInEvents' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? (NexusCore.NexusListDef<'UsersInEvents'> | NexusCore.NexusNonNullDef<'UsersInEvents'>)
-    : 'Warning/Error: The type \'UsersInEvents\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'UsersInEvents\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'User', 'attendance'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.badges`.
@@ -565,7 +617,7 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'badges'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.events`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.followers`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     *
@@ -574,7 +626,7 @@ export interface User {
     * ```prisma
     * model User {
     *   /// Lorem ipsum dolor sit amet.
-    *   events  Event
+    *   followers  Fandom
     * }
     * ```
     *
@@ -589,22 +641,22 @@ export interface User {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.events)
+    *     t.field(User.followers)
     *   }
     * })
     */
-  events: {
+  followers: {
     /**
      * The name of this field.
      */
-    name: 'events'
+    name: 'followers'
   
     /**
      * The type of this field.
      */
-    type: 'Event' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? (NexusCore.NexusListDef<'Event'> | NexusCore.NexusNonNullDef<'Event'>)
-    : 'Warning/Error: The type \'Event\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Event\' to your GraphQL API.'
+    type: 'Fandom' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? (NexusCore.NexusListDef<'Fandom'> | NexusCore.NexusNonNullDef<'Fandom'>)
+    : 'Warning/Error: The type \'Fandom\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Fandom\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -614,7 +666,7 @@ export interface User {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'User', 'events'>
+    resolve: NexusCore.FieldResolver<'User', 'followers'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.following`.
@@ -667,58 +719,6 @@ export interface User {
      * The resolver of this field
      */
     resolve: NexusCore.FieldResolver<'User', 'following'>
-  }
-  /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.followers`.
-    *
-    * ### ️⚠️ You have not writen documentation for model User
-    *
-    * Replace this default advisory JSDoc with your own documentation about model User
-    * by documenting it in your Prisma schema. For example:
-    * ```prisma
-    * model User {
-    *   /// Lorem ipsum dolor sit amet.
-    *   followers  Fandom
-    * }
-    * ```
-    *
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { User } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: User.$name
-    *   description: User.$description
-    *   definition(t) {
-    *     t.field(User.followers)
-    *   }
-    * })
-    */
-  followers: {
-    /**
-     * The name of this field.
-     */
-    name: 'followers'
-  
-    /**
-     * The type of this field.
-     */
-    type: 'Fandom' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? (NexusCore.NexusListDef<'Fandom'> | NexusCore.NexusNonNullDef<'Fandom'>)
-    : 'Warning/Error: The type \'Fandom\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'Fandom\' to your GraphQL API.'
-  
-    /**
-     * The documentation of this field.
-     */
-    description: undefined
-  
-    /**
-     * The resolver of this field
-     */
-    resolve: NexusCore.FieldResolver<'User', 'followers'>
   }
 }
 

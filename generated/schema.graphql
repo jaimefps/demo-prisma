@@ -263,7 +263,6 @@ type User {
   ): BadgeConnection
   createdAt: DateTime!
   email: String!
-  events: [Event!]!
   followers(
     """Returns the elements in the list that come after the specified cursor"""
     after: String

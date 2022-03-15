@@ -246,7 +246,6 @@ export interface NexusGenFieldTypes {
     badges: NexusGenRootTypes['BadgeConnection'] | null; // BadgeConnection
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
-    events: NexusGenRootTypes['Event'][]; // [Event!]!
     followers: NexusGenRootTypes['UserConnection'] | null; // UserConnection
     following: NexusGenRootTypes['UserConnection'] | null; // UserConnection
     hosting: NexusGenRootTypes['EventConnection'] | null; // EventConnection
@@ -361,7 +360,6 @@ export interface NexusGenFieldTypeNames {
     badges: 'BadgeConnection'
     createdAt: 'DateTime'
     email: 'String'
-    events: 'Event'
     followers: 'UserConnection'
     following: 'UserConnection'
     hosting: 'EventConnection'

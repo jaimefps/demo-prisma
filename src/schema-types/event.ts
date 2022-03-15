@@ -52,7 +52,7 @@ export const EventType = objectType({
       async nodes(parent, args, ctx) {
         return ctx.prisma.user.findMany({
           where: {
-            attendance: {
+            attending: {
               some: {
                 event: {
                   id: parent.id

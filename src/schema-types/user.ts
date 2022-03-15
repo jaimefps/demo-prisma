@@ -8,7 +8,6 @@ export const UserType = objectType({
   definition(t) {
     t.field(User.id)
     t.field(User.email)
-    t.field(User.events)
     t.field(User.username)
     t.field(User.createdAt)
     t.field(User.updatedAt)

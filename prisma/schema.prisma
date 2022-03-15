@@ -27,12 +27,12 @@ model User {
   verified Boolean     @default(false)
   type     AccountType @default(BASIC)
 
+  hosting    Event[]
+  attending  UsersInEvents[]
   categories CategoriesOnUsers[]
-  attendance UsersInEvents[]
   badges     BadgesOnUsers[]
-  events     Event[]
-  following  Fandom[]            @relation("fan")
   followers  Fandom[]            @relation("target")
+  following  Fandom[]            @relation("fan")
 }
 
 model Event {
