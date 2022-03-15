@@ -21,6 +21,10 @@
     "generate": "yarn -s run generate:prisma && yarn -s run generate:nexus",
     "generate:nexus": "ts-node --transpile-only src/index.ts",
     "generate:prisma": "prisma generate",
+    "db:seed": "prisma db seed",
     "dev": "nodemon"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
