@@ -5,7 +5,6 @@
 
 
 import type { Context } from "./../src/context"
-import type { ValidateResolver } from "nexus-validate"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { core, connectionPluginCore } from "nexus"
 declare global {
@@ -124,7 +123,6 @@ export interface NexusGenObjects {
   Query: {};
   User: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    email: string; // String!
     id: string; // ID!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
@@ -200,6 +198,7 @@ export interface NexusGenFieldTypes {
     hostId: string; // String!
     id: string; // ID!
     lat: number; // Float!
+    likers: NexusGenRootTypes['UserConnection'] | null; // UserConnection
     lng: number; // Float!
     name: string; // String!
     start: NexusGenScalars['DateTime']; // DateTime!
@@ -219,8 +218,16 @@ export interface NexusGenFieldTypes {
     test: string | null; // String
   }
   Mutation: { // field return type
+    blockUser: boolean | null; // Boolean
     createEvent: boolean | null; // Boolean
     deleteEvent: boolean | null; // Boolean
+    followUser: boolean | null; // Boolean
+    joinEvent: boolean | null; // Boolean
+    leaveEvent: boolean | null; // Boolean
+    likeEvent: boolean | null; // Boolean
+    unblockUser: boolean | null; // Boolean
+    unfollowUser: boolean | null; // Boolean
+    unlikeEvent: boolean | null; // Boolean
     updateEvent: boolean | null; // Boolean
   }
   PageInfo: { // field return type
@@ -245,11 +252,11 @@ export interface NexusGenFieldTypes {
     attributedCategories: NexusGenRootTypes['CategoryConnection'] | null; // CategoryConnection
     badges: NexusGenRootTypes['BadgeConnection'] | null; // BadgeConnection
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    email: string; // String!
     followers: NexusGenRootTypes['UserConnection'] | null; // UserConnection
     following: NexusGenRootTypes['UserConnection'] | null; // UserConnection
     hosting: NexusGenRootTypes['EventConnection'] | null; // EventConnection
     id: string; // ID!
+    likes: NexusGenRootTypes['EventConnection'] | null; // EventConnection
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
     verified: boolean; // Boolean!
@@ -314,6 +321,7 @@ export interface NexusGenFieldTypeNames {
     hostId: 'String'
     id: 'ID'
     lat: 'Float'
+    likers: 'UserConnection'
     lng: 'Float'
     name: 'String'
     start: 'DateTime'
@@ -333,8 +341,16 @@ export interface NexusGenFieldTypeNames {
     test: 'String'
   }
   Mutation: { // field return type name
+    blockUser: 'Boolean'
     createEvent: 'Boolean'
     deleteEvent: 'Boolean'
+    followUser: 'Boolean'
+    joinEvent: 'Boolean'
+    leaveEvent: 'Boolean'
+    likeEvent: 'Boolean'
+    unblockUser: 'Boolean'
+    unfollowUser: 'Boolean'
+    unlikeEvent: 'Boolean'
     updateEvent: 'Boolean'
   }
   PageInfo: { // field return type name
@@ -359,11 +375,11 @@ export interface NexusGenFieldTypeNames {
     attributedCategories: 'CategoryConnection'
     badges: 'BadgeConnection'
     createdAt: 'DateTime'
-    email: 'String'
     followers: 'UserConnection'
     following: 'UserConnection'
     hosting: 'EventConnection'
     id: 'ID'
+    likes: 'EventConnection'
     updatedAt: 'DateTime'
     username: 'String'
     verified: 'Boolean'
@@ -416,8 +432,17 @@ export interface NexusGenArgTypes {
       first?: number | null; // Int
       last?: number | null; // Int
     }
+    likers: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
   }
   Mutation: {
+    blockUser: { // args
+      userId: string; // String!
+    }
     createEvent: { // args
       desc: string; // String!
       end: string; // String!
@@ -427,6 +452,27 @@ export interface NexusGenArgTypes {
       start: string; // String!
     }
     deleteEvent: { // args
+      eventId: string; // String!
+    }
+    followUser: { // args
+      celebId: string; // String!
+    }
+    joinEvent: { // args
+      eventId: string; // String!
+    }
+    leaveEvent: { // args
+      eventId: string; // String!
+    }
+    likeEvent: { // args
+      eventId: string; // String!
+    }
+    unblockUser: { // args
+      userId: string; // String!
+    }
+    unfollowUser: { // args
+      celebId: string; // String!
+    }
+    unlikeEvent: { // args
       eventId: string; // String!
     }
     updateEvent: { // args
@@ -485,6 +531,12 @@ export interface NexusGenArgTypes {
       last?: number | null; // Int
     }
     hosting: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    likes: { // args
       after?: string | null; // String
       before?: string | null; // String
       first?: number | null; // Int
@@ -556,10 +608,6 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
-    /**
-     * Validate mutation arguments.
-     */
-    validate?: ValidateResolver<TypeName, FieldName>
     /**
      * Authorization for an individual field. Returning "true"
      * or "Promise<true>" means the field can be accessed.

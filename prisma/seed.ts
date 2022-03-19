@@ -1,66 +1,83 @@
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
+// See firebase account users
+// for this list of ids.
+const authIdMap = {
+  nena: "VtCkxdatybc42FbQoN7onzqq8Rr2",
+  nene: "oUcexixphgYYAvcAjMKUCvtxvaA2",
+  coco: "ntMaxozmuNbKfjl14DQpbFZmX3M2"
+} as const
+
+function makeUserWithEvent(name: keyof typeof authIdMap) {
+  const authId = authIdMap[name]
+  return {
+    where: { authId },
+    update: {},
+    create: {
+      authId,
+      username: `${name}`,
+      hosting: {
+        create: {
+          name: `${name} event name abc`,
+          desc: `${name} event desc abc`,
+          start: new Date(),
+          end: new Date(),
+          lat: 0,
+          lng: 0
+        }
+      }
+    }
+  }
+}
+
 async function main() {
-  const nena = await prisma.user.upsert({
-    where: { email: "nena@prisma.io" },
-    update: {},
-    create: {
-      username: "nena",
-      email: "nena@prisma.io",
-      hosting: {
-        create: {
-          name: "nena event name abc",
-          desc: "nena event desc abc",
-          start: new Date(),
-          end: new Date(),
-          lat: 0,
-          lng: 0
-        }
+  const inserts = [
+    prisma.user.upsert(makeUserWithEvent("nena")),
+    prisma.user.upsert(makeUserWithEvent("nene")),
+    prisma.user.upsert(makeUserWithEvent("coco")),
+    prisma.category.upsert({
+      where: {
+        name: "comedy"
+      },
+      update: {},
+      create: {
+        name: "comedy",
+        desc: "Where language is used to push the boundaries of our comfort and induce laughter along the way."
       }
-    }
-  })
-  const nene = await prisma.user.upsert({
-    where: { email: "nene@prisma.io" },
-    update: {},
-    create: {
-      username: "nene",
-      email: "nene@prisma.io",
-      hosting: {
-        create: {
-          name: "nene event name abc",
-          desc: "nene event desc abc",
-          start: new Date(),
-          end: new Date(),
-          lat: 0,
-          lng: 0
-        }
+    }),
+    prisma.category.upsert({
+      where: {
+        name: "music"
+      },
+      update: {},
+      create: {
+        name: "music",
+        desc: "That art form that is as old as time."
       }
-    }
-  })
-  const coco = await prisma.user.upsert({
-    where: { email: "coco@prisma.io" },
-    update: {},
-    create: {
-      username: "coco",
-      email: "coco@prisma.io",
-      hosting: {
-        create: {
-          name: "coco event name abc",
-          desc: "coco event desc abc",
-          start: new Date(),
-          end: new Date(),
-          lat: 0,
-          lng: 0
-        }
+    }),
+    prisma.badge.upsert({
+      where: {
+        name: "musician"
+      },
+      update: {},
+      create: {
+        name: "musician",
+        desc: "Others have recognized how your art breaks through the silence."
       }
-    }
-  })
-  console.log({
-    nena,
-    nene,
-    coco
-  })
+    }),
+    prisma.badge.upsert({
+      where: {
+        name: "comedian"
+      },
+      update: {},
+      create: {
+        name: "comedian",
+        desc: "Others have recognized how your art brings laughter to the quiet."
+      }
+    })
+  ]
+  await Promise.all(inserts)
 }
 
 main()

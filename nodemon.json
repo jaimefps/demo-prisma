@@ -1,5 +1,5 @@
 {
-    "exec": "NODE_ENV=development yarn generate && ts-node-dev --no-notify --respawn --transpile-only src/index.ts",
+    "exec": "NODE_ENV=development yarn generate:all && ts-node-dev --no-notify --respawn --transpile-only src/index.ts",
     "ext": "ts,js,json",
     "watch": "src"
 }

@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "email" TEXT NOT NULL,
+    "authId" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "verified" BOOLEAN NOT NULL DEFAULT false,
     "type" "AccountType" NOT NULL DEFAULT E'BASIC',
@@ -91,17 +91,26 @@ CREATE TABLE "UsersInEvents" (
 -- CreateTable
 CREATE TABLE "Fandom" (
     "fanId" TEXT NOT NULL,
-    "targetId" TEXT NOT NULL,
+    "celebId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Fandom_pkey" PRIMARY KEY ("fanId","targetId")
+    CONSTRAINT "Fandom_pkey" PRIMARY KEY ("fanId","celebId")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "User_authId_key" ON "User"("authId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event_id_hostId_key" ON "Event"("id", "hostId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Badge_name_key" ON "Badge"("name");
 
 -- AddForeignKey
 ALTER TABLE "Event" ADD CONSTRAINT "Event_hostId_fkey" FOREIGN KEY ("hostId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -134,4 +143,4 @@ ALTER TABLE "UsersInEvents" ADD CONSTRAINT "UsersInEvents_eventId_fkey" FOREIGN 
 ALTER TABLE "Fandom" ADD CONSTRAINT "Fandom_fanId_fkey" FOREIGN KEY ("fanId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Fandom" ADD CONSTRAINT "Fandom_targetId_fkey" FOREIGN KEY ("targetId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Fandom" ADD CONSTRAINT "Fandom_celebId_fkey" FOREIGN KEY ("celebId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

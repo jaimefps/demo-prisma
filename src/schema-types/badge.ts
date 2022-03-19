@@ -1,4 +1,4 @@
-import { list, nonNull, objectType, queryField, stringArg } from "nexus"
+import { list, objectType, queryField, stringArg } from "nexus"
 import { Badge } from "../../generated/nexus-prisma"
 import { UserType } from "."
 
@@ -38,7 +38,7 @@ export const BadgeType = objectType({
 export const badgeQuery = queryField("badge", {
   type: BadgeType,
   args: {
-    id: nonNull(stringArg())
+    id: stringArg()
   },
   resolve(_, args, ctx) {
     return ctx.prisma.badge.findUnique({

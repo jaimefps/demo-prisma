@@ -1,4 +1,4 @@
-import { list, nonNull, objectType, queryField, stringArg } from "nexus"
+import { list, objectType, queryField, stringArg } from "nexus"
 import { Category } from "../../generated/nexus-prisma"
 import { EventType, UserType } from "."
 
@@ -13,7 +13,7 @@ export const CategoryType = objectType({
     t.field(Category.updatedAt)
     t.connectionField("attributedUsers", {
       type: UserType,
-      nodes(parent, args, ctx) {
+      async nodes(parent, args, ctx) {
         return ctx.prisma.user.findMany({
           where: {
             categories: {
@@ -59,7 +59,7 @@ export const CategoryType = objectType({
 export const categoryQuery = queryField("category", {
   type: CategoryType,
   args: {
-    id: nonNull(stringArg())
+    id: stringArg()
   },
   resolve(_, args, ctx) {
     return ctx.prisma.category.findUnique({

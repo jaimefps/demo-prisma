@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 generator nexusPrisma {
@@ -21,18 +22,20 @@ model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  authId    String   @unique
 
-  email    String      @unique
   username String      @unique
   verified Boolean     @default(false)
+  blocked  Boolean     @default(false)
   type     AccountType @default(BASIC)
 
   hosting    Event[]
   attending  UsersInEvents[]
   categories CategoriesOnUsers[]
   badges     BadgesOnUsers[]
-  followers  Fandom[]            @relation("target")
   following  Fandom[]            @relation("fan")
+  followers  Fandom[]            @relation("celeb")
+  likes      UserLikesEvent[]
 }
 
 model Event {
@@ -51,6 +54,9 @@ model Event {
   host       User                 @relation(fields: [hostId], references: [id], onDelete: Cascade)
   attendance UsersInEvents[]
   categories CategoriesOnEvents[]
+  likes      UserLikesEvent[]
+
+  @@unique([id, hostId])
 }
 
 model Category {
@@ -58,7 +64,7 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  name String
+  name String @unique
   desc String
 
   userAttributions  CategoriesOnUsers[]
@@ -70,7 +76,7 @@ model Badge {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  name String
+  name String @unique
   desc String
 
   attributions BadgesOnUsers[]
@@ -117,11 +123,22 @@ model UsersInEvents {
 }
 
 model Fandom {
-  fan      User   @relation(name: "fan", fields: [fanId], references: [id], onDelete: Cascade)
-  fanId    String
-  target   User   @relation(name: "target", fields: [targetId], references: [id], onDelete: Cascade)
-  targetId String
+  fan     User   @relation(name: "fan", fields: [fanId], references: [id], onDelete: Cascade)
+  fanId   String
+  celeb   User   @relation(name: "celeb", fields: [celebId], references: [id], onDelete: Cascade)
+  celebId String
 
   createdAt DateTime @default(now())
-  @@id([fanId, targetId])
+  @@id([fanId, celebId])
+}
+
+model UserLikesEvent {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String
+
+  createdAt DateTime @default(now())
+
+  @@id([userId, eventId])
 }

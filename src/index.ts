@@ -1,52 +1,30 @@
-import { makeSchema, connectionPlugin, fieldAuthorizePlugin } from "nexus"
-import { validatePlugin } from "nexus-validate"
-import * as SchemaTypes from "./schema-types"
-import { ApolloServer } from "apollo-server"
+import { ApolloServer, AuthenticationError, ForbiddenError } from "apollo-server"
+import { authenticate, dangerous_authenticateDev } from "./auth"
 import { Context } from "./context"
-import path, { join } from "path"
-
-const schema = makeSchema({
-  outputs: {
-    typegen: join(__dirname, "../generated/nexus-typegen.ts"),
-    schema: join(__dirname, "../generated/schema.graphql")
-  },
-  contextType: {
-    module: path.join(__dirname, "./context.ts"),
-    export: "Context"
-  },
-  plugins: [
-    validatePlugin(),
-    fieldAuthorizePlugin(),
-    connectionPlugin({
-      validateArgs(args, info) {
-        // TODO: Review and update "connection
-        // validations" for pagination patterns.
-        return true
-      },
-      includeNodesField: true,
-      extendConnection: {
-        totalCount: { type: "Int" }
-      }
-    })
-  ],
-  nonNullDefaults: {
-    input: true,
-    output: false
-  },
-  types: [...Object.values(SchemaTypes)]
-})
+import { schema } from "./schema"
 
 const server = new ApolloServer({
-  context: async ({ req, res }) => {
-    // maybe use req & res here for auth and metrics analysis:
-    // async function findOrCreateUser() {}
-    // const user = await findOrCreateUser()
-    return new Context(/* user */)
+  async context({ req }) {
+    const userInfo =
+      process.env.NODE_ENV === "development"
+        ? await dangerous_authenticateDev(req)
+        : await authenticate(req)
+
+    if (userInfo) {
+      if (userInfo.dbUser.blocked) {
+        throw new ForbiddenError("User blocked from application")
+      }
+      return new Context(userInfo)
+    }
+
+    throw new AuthenticationError("Failed to authenticate")
   },
   cors: true,
   schema
 })
 
 server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`)
+  console.log(`Apollo: https://studio.apollographql.com/sandbox/explorer`)
+  console.log(`Prisma: http://localhost:5555/`)
+  console.log(`Server: ${url}`)
 })

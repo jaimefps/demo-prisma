@@ -1,15 +1,6 @@
+import { floatArg, list, mutationField, objectType, queryField, stringArg } from "nexus"
 import { Event } from "../../generated/nexus-prisma"
-import { userCanMutateEvent } from "../data-sources/user"
 import { UserType, CategoryType } from "."
-import {
-  floatArg,
-  list,
-  mutationField,
-  nonNull,
-  objectType,
-  queryField,
-  stringArg
-} from "nexus"
 
 export const EventType = objectType({
   name: Event.$name,
@@ -70,13 +61,34 @@ export const EventType = objectType({
         })
       }
     })
+    t.connectionField("likers", {
+      type: UserType,
+      nodes(parent, args, ctx) {
+        return ctx.prisma.user.findMany({
+          where: {
+            likes: {
+              some: {
+                event: {
+                  id: parent.id
+                }
+              }
+            }
+          }
+        })
+      },
+      totalCount(parent, args, ctx) {
+        return ctx.prisma.userLikesEvent.count({
+          where: { eventId: parent.id }
+        })
+      }
+    })
   }
 })
 
 export const eventQuery = queryField("event", {
   type: EventType,
   args: {
-    id: nonNull(stringArg())
+    id: stringArg()
   },
   resolve(_, args, ctx) {
     return ctx.prisma.event.findUnique({
@@ -102,17 +114,11 @@ export const createEvent = mutationField("createEvent", {
     start: stringArg(),
     end: stringArg()
   },
-  async authorize(_, args, ctx) {
-    const clientInfo = await ctx.clientInfo()
-    return Boolean(clientInfo)
-  },
   async resolve(_, args, ctx) {
     try {
-      const clientInfo = await ctx.clientInfo()
-      const clientId = clientInfo?.id as string
       await ctx.prisma.event.create({
         data: {
-          hostId: clientId,
+          hostId: ctx.clientId,
           start: new Date(args.start),
           end: new Date(args.end),
           name: args.name,
@@ -121,7 +127,7 @@ export const createEvent = mutationField("createEvent", {
           lng: args.lng,
           attendance: {
             create: {
-              userId: clientId
+              userId: ctx.clientId
             }
           }
         }
@@ -144,17 +150,15 @@ export const updateEvent = mutationField("updateEvent", {
     start: stringArg(),
     end: stringArg()
   },
-  async authorize(_, args, ctx) {
-    const clientInfo = await ctx.clientInfo()
-    return userCanMutateEvent({
-      eventId: args.eventId,
-      userId: clientInfo?.id
-    })
-  },
   async resolve(_, args, ctx) {
     try {
       await ctx.prisma.event.update({
-        where: { id: args.eventId },
+        where: {
+          id_hostId: {
+            id: args.eventId,
+            hostId: ctx.clientId
+          }
+        },
         data: {
           start: new Date(args.start),
           end: new Date(args.end),
@@ -176,17 +180,107 @@ export const deleteEvent = mutationField("deleteEvent", {
   args: {
     eventId: stringArg()
   },
-  async authorize(_, args, ctx) {
-    const clientInfo = await ctx.clientInfo()
-    return userCanMutateEvent({
-      eventId: args.eventId,
-      userId: clientInfo?.id
-    })
+  async resolve(_, args, ctx) {
+    try {
+      // super user can remove any events:
+      if (ctx.clientIsSuperuser) {
+        await ctx.prisma.event.delete({
+          where: {
+            id: args.eventId
+          }
+        })
+      }
+      await ctx.prisma.event.delete({
+        where: {
+          id_hostId: {
+            id: args.eventId,
+            hostId: ctx.clientId
+          }
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const joinEvent = mutationField("joinEvent", {
+  type: "Boolean",
+  args: {
+    eventId: stringArg()
   },
   async resolve(_, args, ctx) {
     try {
-      await ctx.prisma.event.delete({
-        where: { id: args.eventId }
+      await ctx.prisma.usersInEvents.create({
+        data: {
+          eventId: args.eventId,
+          userId: ctx.clientId
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const leaveEvent = mutationField("leaveEvent", {
+  type: "Boolean",
+  args: {
+    eventId: stringArg()
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.usersInEvents.delete({
+        where: {
+          userId_eventId: {
+            eventId: args.eventId,
+            userId: ctx.clientId
+          }
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const likeEvent = mutationField("likeEvent", {
+  type: "Boolean",
+  args: {
+    eventId: stringArg()
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.userLikesEvent.create({
+        data: {
+          userId: ctx.clientId,
+          eventId: args.eventId
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const unlikeEvent = mutationField("unlikeEvent", {
+  type: "Boolean",
+  args: {
+    eventId: stringArg()
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.userLikesEvent.delete({
+        where: {
+          userId_eventId: {
+            userId: ctx.clientId,
+            eventId: args.eventId
+          }
+        }
       })
       return true
     } catch (e) {

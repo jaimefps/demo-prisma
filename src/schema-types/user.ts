@@ -1,30 +1,50 @@
-import { User } from "../../generated/nexus-prisma"
-import { list, nonNull, objectType, queryField, stringArg } from "nexus"
+import { list, mutationField, objectType, queryField, stringArg } from "nexus"
 import { BadgeType, CategoryType, EventType } from "."
+import { User } from "../../generated/nexus-prisma"
 
 export const UserType = objectType({
   name: User.$name,
   description: User.$description,
   definition(t) {
     t.field(User.id)
-    t.field(User.email)
     t.field(User.username)
     t.field(User.createdAt)
     t.field(User.updatedAt)
     t.field(User.verified)
-    t.connectionField("hosting", {
+    t.connectionField("likes", {
       type: EventType,
       nodes(parent, args, ctx) {
         return ctx.prisma.event.findMany({
-          where: { hostId: parent.id }
+          where: {
+            likes: {
+              some: {
+                user: {
+                  id: parent.id
+                }
+              }
+            }
+          }
         })
       },
-      async totalCount(parent, args, ctx) {
-        return ctx.prisma.event.count({
-          where: { hostId: parent.id }
+      totalCount(parent, args, ctx) {
+        return ctx.prisma.userLikesEvent.count({
+          where: { userId: parent.id }
         })
       }
-    })
+    }),
+      t.connectionField("hosting", {
+        type: EventType,
+        nodes(parent, args, ctx) {
+          return ctx.prisma.event.findMany({
+            where: { hostId: parent.id }
+          })
+        },
+        async totalCount(parent, args, ctx) {
+          return ctx.prisma.event.count({
+            where: { hostId: parent.id }
+          })
+        }
+      })
     t.connectionField("attending", {
       type: EventType,
       nodes(parent, args, ctx) {
@@ -74,7 +94,7 @@ export const UserType = objectType({
           where: {
             following: {
               some: {
-                target: {
+                celeb: {
                   id: parent.id
                 }
               }
@@ -84,7 +104,7 @@ export const UserType = objectType({
       },
       totalCount(parent, args, ctx) {
         return ctx.prisma.fandom.count({
-          where: { targetId: parent.id }
+          where: { celebId: parent.id }
         })
       }
     })
@@ -136,7 +156,7 @@ export const UserType = objectType({
 export const userQuery = queryField("user", {
   type: UserType,
   args: {
-    id: nonNull(stringArg())
+    id: stringArg()
   },
   resolve(_, args, ctx) {
     return ctx.prisma.user.findUnique({
@@ -149,5 +169,51 @@ export const usersQuery = queryField("users", {
   type: list(UserType),
   resolve(_, args, ctx) {
     return ctx.prisma.user.findMany()
+  }
+})
+
+export const followUser = mutationField("followUser", {
+  type: "Boolean",
+  args: {
+    celebId: stringArg()
+  },
+  authorize(_, args, ctx) {
+    // cannot follow self
+    return args.celebId !== ctx.clientId
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.fandom.create({
+        data: {
+          fanId: ctx.clientId,
+          celebId: args.celebId
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const unfollowUser = mutationField("unfollowUser", {
+  type: "Boolean",
+  args: {
+    celebId: stringArg()
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.fandom.delete({
+        where: {
+          fanId_celebId: {
+            fanId: ctx.clientId,
+            celebId: args.celebId
+          }
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
   }
 })
