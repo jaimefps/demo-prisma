@@ -232,8 +232,8 @@ type PageInfo {
 
 type Query {
   badge(id: String!): Badge
-  badges: [Badge]
-  categories: [Category]
+  badges(search: String): [Badge]
+  categories(search: String): [Category]
   category(id: String!): Category
   event(id: String!): Event
   events: [Event]

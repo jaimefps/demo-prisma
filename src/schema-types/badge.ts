@@ -1,6 +1,7 @@
-import { list, objectType, queryField, stringArg } from "nexus"
+import { list, nullable, objectType, queryField, stringArg } from "nexus"
 import { Badge } from "../../generated/nexus-prisma"
 import { UserType } from "."
+import { Prisma } from "@prisma/client"
 
 export const BadgeType = objectType({
   name: Badge.$name,
@@ -49,7 +50,20 @@ export const badgeQuery = queryField("badge", {
 
 export const badgesQuery = queryField("badges", {
   type: list(BadgeType),
+  args: {
+    search: nullable(stringArg())
+  },
   resolve(_, args, ctx) {
-    return ctx.prisma.badge.findMany()
+    let q: Prisma.BadgeFindManyArgs | undefined
+    if (args.search) {
+      q = {
+        where: {
+          name: {
+            contains: args.search
+          }
+        }
+      }
+    }
+    return ctx.prisma.badge.findMany(q)
   }
 })

@@ -9,14 +9,12 @@ const server = new ApolloServer({
       process.env.NODE_ENV === "development"
         ? await dangerous_authenticateDev(req)
         : await authenticate(req)
-
     if (userInfo) {
       if (userInfo.dbUser.blocked) {
         throw new ForbiddenError("User blocked from application")
       }
       return new Context(userInfo)
     }
-
     throw new AuthenticationError("Failed to authenticate")
   },
   cors: true,

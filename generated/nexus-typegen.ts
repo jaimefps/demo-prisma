@@ -489,6 +489,12 @@ export interface NexusGenArgTypes {
     badge: { // args
       id: string; // String!
     }
+    badges: { // args
+      search?: string | null; // String
+    }
+    categories: { // args
+      search?: string | null; // String
+    }
     category: { // args
       id: string; // String!
     }

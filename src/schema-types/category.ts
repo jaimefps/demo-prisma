@@ -1,6 +1,7 @@
-import { list, objectType, queryField, stringArg } from "nexus"
+import { list, nullable, objectType, queryField, stringArg } from "nexus"
 import { Category } from "../../generated/nexus-prisma"
 import { EventType, UserType } from "."
+import { Prisma } from "@prisma/client"
 
 export const CategoryType = objectType({
   name: Category.$name,
@@ -70,7 +71,20 @@ export const categoryQuery = queryField("category", {
 
 export const categoriesQuery = queryField("categories", {
   type: list(CategoryType),
+  args: {
+    search: nullable(stringArg())
+  },
   resolve(_, args, ctx) {
+    let q: Prisma.CategoryFindManyArgs | undefined
+    if (args.search) {
+      q = {
+        where: {
+          name: {
+            contains: args.search
+          }
+        }
+      }
+    }
     return ctx.prisma.category.findMany()
   }
 })
