@@ -25,7 +25,7 @@ CREATE TABLE "Event" (
     "lat" DOUBLE PRECISION NOT NULL,
     "lng" DOUBLE PRECISION NOT NULL,
     "start" TIMESTAMP(3) NOT NULL,
-    "end" TIMESTAMP(3),
+    "end" TIMESTAMP(3) NOT NULL,
     "hostId" TEXT NOT NULL,
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
