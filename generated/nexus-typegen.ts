@@ -221,6 +221,7 @@ export interface NexusGenFieldTypes {
     blockUser: boolean | null; // Boolean
     createEvent: boolean | null; // Boolean
     deleteEvent: boolean | null; // Boolean
+    deleteUser: boolean | null; // Boolean
     followUser: boolean | null; // Boolean
     joinEvent: boolean | null; // Boolean
     leaveEvent: boolean | null; // Boolean
@@ -345,6 +346,7 @@ export interface NexusGenFieldTypeNames {
     blockUser: 'Boolean'
     createEvent: 'Boolean'
     deleteEvent: 'Boolean'
+    deleteUser: 'Boolean'
     followUser: 'Boolean'
     joinEvent: 'Boolean'
     leaveEvent: 'Boolean'

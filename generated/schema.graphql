@@ -195,6 +195,7 @@ type Mutation {
   blockUser(userId: String!): Boolean
   createEvent(desc: String!, end: String!, lat: Float!, lng: Float!, name: String!, start: String!): Boolean
   deleteEvent(eventId: String!): Boolean
+  deleteUser: Boolean
   followUser(celebId: String!): Boolean
   joinEvent(eventId: String!): Boolean
   leaveEvent(eventId: String!): Boolean

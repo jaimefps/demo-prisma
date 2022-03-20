@@ -2,21 +2,18 @@ import { UserDataSource, EventDataSource } from "./data-sources"
 import { UserInfoType } from "./types"
 import { prisma } from "./prisma"
 
-type UserInfoNonNullType = NonNullable<UserInfoType>
+type ContextUserInfo = NonNullable<UserInfoType>
 
 export class Context {
-  private requestUser: UserInfoNonNullType
-  private prismaClient = prisma
+  prisma = prisma
+  private authenticatedClient: ContextUserInfo
 
-  constructor(requestUser: UserInfoNonNullType) {
-    this.requestUser = requestUser
+  constructor(authenticatedClient: ContextUserInfo) {
+    this.authenticatedClient = authenticatedClient
   }
 
-  get prisma() {
-    return this.prismaClient
-  }
   get client() {
-    return this.requestUser
+    return this.authenticatedClient
   }
   get clientId() {
     return this.client.dbUser.id
@@ -24,6 +21,7 @@ export class Context {
   get clientIsSuperuser() {
     return this.client.dbUser.type === "SUPERUSER"
   }
+
   get user() {
     return new UserDataSource(this)
   }

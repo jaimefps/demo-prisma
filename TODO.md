@@ -1,12 +1,12 @@
-createUser
+x createUser
 x readUser
-deleteUser
+x deleteUser
 x updateUser
 
 x createEvent
 x readEvent
-deleteEvent
-updateEvent
+x deleteEvent
+x updateEvent
 
 x readCategories
 x readBadges
@@ -16,3 +16,10 @@ x unfollowUser
 
 x joinEvent
 x leaveEvent
+
+date validations
+
+- when create events
+- when read events
+- when update events
+- when delete events

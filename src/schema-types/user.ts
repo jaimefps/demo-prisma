@@ -179,8 +179,8 @@ export const blockUser = mutationField("blockUser", {
   },
   authorize(_, args, ctx) {
     // cannot block self:
-    const isSelfTarget = args.userId !== ctx.clientId
-    return ctx.clientIsSuperuser && isSelfTarget
+    const notSelfTarget = args.userId !== ctx.clientId
+    return ctx.clientIsSuperuser && notSelfTarget
   },
   async resolve(_, args, ctx) {
     try {
@@ -303,6 +303,20 @@ export const updateUser = mutationField("updateUser", {
             }
           }
         }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const deleteUser = mutationField("deleteUser", {
+  type: "Boolean",
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.user.delete({
+        where: { id: ctx.clientId }
       })
       return true
     } catch (e) {

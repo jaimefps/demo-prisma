@@ -8,18 +8,23 @@ import { Context } from "./context"
 import { schema } from "./schema"
 
 const server = new ApolloServer({
-  async context({ req }) {
-    const userInfo =
-      process.env.NODE_ENV === "development"
-        ? await dangerous_authenticateDev(req)
-        : await authenticate(req)
-    if (userInfo) {
-      if (userInfo.dbUser.blocked) {
-        throw new ForbiddenError("User blocked from application")
+  async context({ req, res }) {
+    try {
+      const userInfo =
+        process.env.NODE_ENV === "development"
+          ? await dangerous_authenticateDev(req)
+          : await authenticate(req)
+      if (userInfo) {
+        if (userInfo.dbUser.blocked) {
+          throw new ForbiddenError("User blocked from application")
+        }
+        return new Context(userInfo)
       }
-      return new Context(userInfo)
+      throw new AuthenticationError("Failed to authenticate")
+    } catch (e) {
+      console.error(e)
+      res.status(500).send()
     }
-    throw new AuthenticationError("Failed to authenticate")
   },
   cors: true,
   schema

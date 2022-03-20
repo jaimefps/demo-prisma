@@ -12,6 +12,9 @@ export async function authenticate(req: Request) {
   const token = getAuthToken(req.headers.authorization) ?? ""
   const authUser = await AuthSingleton.verifyToken(token ?? "")
   const authId = authUser?.uid
+  if (!authId) {
+    return
+  }
   const dbUser = await prisma.user.upsert({
     where: {
       authId
@@ -22,18 +25,21 @@ export async function authenticate(req: Request) {
     },
     update: {}
   })
-  const fullyAuthenticated = dbUser && authUser
-  const userInfo = { authUser, dbUser }
-  return fullyAuthenticated ? userInfo : null
+  if (dbUser && authUser) {
+    return {
+      authUser,
+      dbUser
+    }
+  }
 }
 
-// id from firebase:
-const devFirebaseUuid = "oUcexixphgYYAvcAjMKUCvtxvaA2"
 export async function dangerous_authenticateDev(req: Request) {
   console.warn(
     "\x1b[33m%s\x1b[0m",
     "DANGEROUS: Bypassing Authentication: dangerous_authenticateDev"
   )
+  // id from firebase:
+  const devFirebaseUuid = "oUcexixphgYYAvcAjMKUCvtxvaA2"
   const authUser = {
     uid: devFirebaseUuid,
     email: "nene@nene.com"
