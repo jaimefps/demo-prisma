@@ -55,8 +55,6 @@ model Event {
   attendance UsersInEvents[]
   categories CategoriesOnEvents[]
   likes      UserLikesEvent[]
-
-  @@unique([id, hostId])
 }
 
 model Category {

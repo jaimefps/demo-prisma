@@ -478,6 +478,7 @@ export interface NexusGenArgTypes {
       eventId: string; // String!
     }
     updateEvent: { // args
+      categories: string[]; // [String!]!
       desc: string; // String!
       end: string; // String!
       eventId: string; // String!

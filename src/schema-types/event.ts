@@ -155,24 +155,49 @@ export const updateEvent = mutationField("updateEvent", {
     lat: floatArg(),
     lng: floatArg(),
     start: stringArg(),
-    end: stringArg()
+    end: stringArg(),
+    categories: list(stringArg())
+  },
+  async authorize(_, args, ctx) {
+    const event = await ctx.prisma.event.findUnique({
+      where: { id: args.eventId }
+    })
+    // only host can update event:
+    return event?.hostId === ctx.clientId
   },
   async resolve(_, args, ctx) {
     try {
       await ctx.prisma.event.update({
-        where: {
-          id_hostId: {
-            id: args.eventId,
-            hostId: ctx.clientId
-          }
-        },
+        where: { id: args.eventId },
         data: {
           start: new Date(args.start),
           end: new Date(args.end),
           name: args.name,
           desc: args.desc,
           lat: args.lat,
-          lng: args.lng
+          lng: args.lng,
+          categories: {
+            // adds any categories in list:
+            upsert: args.categories.map((c) => ({
+              where: {
+                eventId_categoryId: {
+                  eventId: args.eventId,
+                  categoryId: c
+                }
+              },
+              create: { categoryId: c },
+              update: { categoryId: c }
+            })),
+            // removes all categories,
+            // except items in list:
+            deleteMany: {
+              NOT: {
+                categoryId: {
+                  in: args.categories
+                }
+              }
+            }
+          }
         }
       })
       return true
@@ -187,23 +212,17 @@ export const deleteEvent = mutationField("deleteEvent", {
   args: {
     eventId: stringArg()
   },
+  async authorize(_, args, ctx) {
+    const event = await ctx.prisma.event.findUnique({
+      where: { id: args.eventId }
+    })
+    // only host should delete event:
+    return event?.hostId === ctx.clientId || ctx.clientIsSuperuser
+  },
   async resolve(_, args, ctx) {
     try {
-      // super user can remove any events:
-      if (ctx.clientIsSuperuser) {
-        await ctx.prisma.event.delete({
-          where: {
-            id: args.eventId
-          }
-        })
-      }
       await ctx.prisma.event.delete({
-        where: {
-          id_hostId: {
-            id: args.eventId,
-            hostId: ctx.clientId
-          }
-        }
+        where: { id: args.eventId }
       })
       return true
     } catch (e) {

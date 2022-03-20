@@ -30,7 +30,10 @@ export async function authenticate(req: Request) {
 // id from firebase:
 const devFirebaseUuid = "oUcexixphgYYAvcAjMKUCvtxvaA2"
 export async function dangerous_authenticateDev(req: Request) {
-  console.warn("!! Bypassing Firebase Auth: dangerous_authenticateDev !!")
+  console.warn(
+    "\x1b[33m%s\x1b[0m",
+    "DANGEROUS: Bypassing Authentication: dangerous_authenticateDev"
+  )
   const authUser = {
     uid: devFirebaseUuid,
     email: "nene@nene.com"

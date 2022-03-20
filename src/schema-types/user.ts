@@ -172,60 +172,15 @@ export const usersQuery = queryField("users", {
   }
 })
 
-export const followUser = mutationField("followUser", {
-  type: "Boolean",
-  args: {
-    celebId: stringArg()
-  },
-  authorize(_, args, ctx) {
-    // cannot follow self
-    return args.celebId !== ctx.clientId
-  },
-  async resolve(_, args, ctx) {
-    try {
-      await ctx.prisma.fandom.create({
-        data: {
-          fanId: ctx.clientId,
-          celebId: args.celebId
-        }
-      })
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-})
-
-export const unfollowUser = mutationField("unfollowUser", {
-  type: "Boolean",
-  args: {
-    celebId: stringArg()
-  },
-  async resolve(_, args, ctx) {
-    try {
-      await ctx.prisma.fandom.delete({
-        where: {
-          fanId_celebId: {
-            fanId: ctx.clientId,
-            celebId: args.celebId
-          }
-        }
-      })
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-})
-
 export const blockUser = mutationField("blockUser", {
   type: "Boolean",
   args: {
     userId: stringArg()
   },
   authorize(_, args, ctx) {
-    // cannot block self
-    return ctx.clientIsSuperuser && args.userId !== ctx.clientId
+    // cannot block self:
+    const isSelfTarget = args.userId !== ctx.clientId
+    return ctx.clientIsSuperuser && isSelfTarget
   },
   async resolve(_, args, ctx) {
     try {
@@ -256,6 +211,52 @@ export const unblockUser = mutationField("unblockUser", {
         where: { id: args.userId },
         data: {
           blocked: false
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const followUser = mutationField("followUser", {
+  type: "Boolean",
+  args: {
+    celebId: stringArg()
+  },
+  authorize(_, args, ctx) {
+    // cannot follow self:
+    return args.celebId !== ctx.clientId
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.fandom.create({
+        data: {
+          fanId: ctx.clientId,
+          celebId: args.celebId
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const unfollowUser = mutationField("unfollowUser", {
+  type: "Boolean",
+  args: {
+    celebId: stringArg()
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.fandom.delete({
+        where: {
+          fanId_celebId: {
+            fanId: ctx.clientId,
+            celebId: args.celebId
+          }
         }
       })
       return true
@@ -305,7 +306,6 @@ export const updateUser = mutationField("updateUser", {
       })
       return true
     } catch (e) {
-      console.log({ error: e })
       return false
     }
   }
