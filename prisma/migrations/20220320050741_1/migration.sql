@@ -9,6 +9,7 @@ CREATE TABLE "User" (
     "authId" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "verified" BOOLEAN NOT NULL DEFAULT false,
+    "blocked" BOOLEAN NOT NULL DEFAULT false,
     "type" "AccountType" NOT NULL DEFAULT E'BASIC',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -97,14 +98,20 @@ CREATE TABLE "Fandom" (
     CONSTRAINT "Fandom_pkey" PRIMARY KEY ("fanId","celebId")
 );
 
+-- CreateTable
+CREATE TABLE "UserLikesEvent" (
+    "userId" TEXT NOT NULL,
+    "eventId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "UserLikesEvent_pkey" PRIMARY KEY ("userId","eventId")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_authId_key" ON "User"("authId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Event_id_hostId_key" ON "Event"("id", "hostId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
@@ -144,3 +151,9 @@ ALTER TABLE "Fandom" ADD CONSTRAINT "Fandom_fanId_fkey" FOREIGN KEY ("fanId") RE
 
 -- AddForeignKey
 ALTER TABLE "Fandom" ADD CONSTRAINT "Fandom_celebId_fkey" FOREIGN KEY ("celebId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserLikesEvent" ADD CONSTRAINT "UserLikesEvent_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserLikesEvent" ADD CONSTRAINT "UserLikesEvent_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;
