@@ -24,17 +24,24 @@ x unlikeEvent
 x joinEvent
 x leaveEvent
 
-date validations
-
-- when create events 
-- when read events
-- when update events
-- when delete events
-
-
 PREMIUM perks (distant future)
 - promote events
 - create events outside the time limit
 - able to create & attribute badges
 - view metrics on event engagement
 - event profiles: select from types of events
+
+ERRORS
+- include validation errors in api responses
+
+VALIDATIONS
+- validate updateUser
+- validate assignBadge
+- date validations
+-- when create events 
+-- when update events
+-- when delete events
+-- when read events
+
+PAGINATION
+- infinite scroll pagination (wave 2, once there is enough volume to merit)

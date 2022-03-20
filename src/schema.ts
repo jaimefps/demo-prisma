@@ -1,5 +1,4 @@
 import { makeSchema, connectionPlugin, fieldAuthorizePlugin } from "nexus"
-import { validatePlugin } from "nexus-validate"
 import * as SchemaTypes from "./schema-types"
 import path, { join } from "path"
 
@@ -13,7 +12,6 @@ export const schema = makeSchema({
     export: "Context"
   },
   plugins: [
-    validatePlugin(),
     fieldAuthorizePlugin(),
     connectionPlugin({
       includeNodesField: true,
@@ -23,6 +21,7 @@ export const schema = makeSchema({
       validateArgs(args, info) {
         // TODO: Review and update "connection
         // validations" for pagination patterns.
+        // https://nexusjs.org/docs/plugins/connection#argument-validation
         return true
       }
     })

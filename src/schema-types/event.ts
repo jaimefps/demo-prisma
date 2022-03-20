@@ -110,7 +110,7 @@ export const eventQuery = queryField("event", {
 export const eventsQuery = queryField("events", {
   type: list(EventType),
   resolve(_, args, ctx) {
-    const { boundStart, boundEnd } = ctx.event.validTimeBoundaries()
+    const { boundStart, boundEnd } = ctx.event.allowedTimeBoundaries()
     return ctx.prisma.event.findMany({
       where: {
         OR: [

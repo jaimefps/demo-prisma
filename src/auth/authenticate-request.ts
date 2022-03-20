@@ -36,7 +36,7 @@ export async function authenticate(req: Request) {
 export async function dangerous_authenticateDev(req: Request) {
   console.warn(
     "\x1b[33m%s\x1b[0m",
-    "DANGEROUS: Bypassing Authentication: dangerous_authenticateDev"
+    "WARNING: Bypassing Authentication: dangerous_authenticateDev"
   )
   // id from firebase:
   const devFirebaseUuid = "oUcexixphgYYAvcAjMKUCvtxvaA2"

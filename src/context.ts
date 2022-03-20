@@ -1,4 +1,5 @@
 import { UserDataSource, EventDataSource } from "./data-sources"
+import { Validations } from "./validations"
 import { UserInfoType } from "./types"
 import { prisma } from "./prisma"
 
@@ -21,11 +22,13 @@ export class Context {
   get clientIsSuperuser() {
     return this.client.dbUser.type === "SUPERUSER"
   }
-
   get user() {
     return new UserDataSource(this)
   }
   get event() {
     return new EventDataSource(this)
+  }
+  get validation() {
+    return new Validations(this)
   }
 }

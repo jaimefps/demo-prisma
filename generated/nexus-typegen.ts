@@ -5,7 +5,6 @@
 
 
 import type { Context } from "./../src/context"
-import type { ValidateResolver } from "nexus-validate"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { core, connectionPluginCore } from "nexus"
 declare global {
@@ -622,10 +621,6 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
-    /**
-     * Validate mutation arguments.
-     */
-    validate?: ValidateResolver<TypeName, FieldName>
     /**
      * Authorization for an individual field. Returning "true"
      * or "Promise<true>" means the field can be accessed.
