@@ -5,6 +5,7 @@
 
 
 import type { Context } from "./../src/context"
+import type { ValidateResolver } from "nexus-validate"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { core, connectionPluginCore } from "nexus"
 declare global {
@@ -39,6 +40,15 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  EventInput: { // input type
+    categories: string[]; // [String!]!
+    desc: string; // String!
+    end: string; // String!
+    lat: number; // Float!
+    lng: number; // Float!
+    name: string; // String!
+    start: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -448,12 +458,7 @@ export interface NexusGenArgTypes {
       userId: string; // String!
     }
     createEvent: { // args
-      desc: string; // String!
-      end: string; // String!
-      lat: number; // Float!
-      lng: number; // Float!
-      name: string; // String!
-      start: string; // String!
+      data: NexusGenInputs['EventInput']; // EventInput!
     }
     deleteEvent: { // args
       eventId: string; // String!
@@ -480,14 +485,8 @@ export interface NexusGenArgTypes {
       eventId: string; // String!
     }
     updateEvent: { // args
-      categories: string[]; // [String!]!
-      desc: string; // String!
-      end: string; // String!
+      data: NexusGenInputs['EventInput']; // EventInput!
       eventId: string; // String!
-      lat: number; // Float!
-      lng: number; // Float!
-      name: string; // String!
-      start: string; // String!
     }
     updateUser: { // args
       categories: string[]; // [String!]!
@@ -568,7 +567,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 
@@ -623,6 +622,10 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+    /**
+     * Validate mutation arguments.
+     */
+    validate?: ValidateResolver<TypeName, FieldName>
     /**
      * Authorization for an individual field. Returning "true"
      * or "Promise<true>" means the field can be accessed.

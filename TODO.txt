@@ -26,7 +26,15 @@ x leaveEvent
 
 date validations
 
-- when create events
+- when create events 
 - when read events
 - when update events
 - when delete events
+
+
+PREMIUM perks (distant future)
+- promote events
+- create events outside the time limit
+- able to create & attribute badges
+- view metrics on event engagement
+- event profiles: select from types of events

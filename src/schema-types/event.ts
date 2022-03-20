@@ -1,5 +1,6 @@
 import {
-  floatArg,
+  arg,
+  inputObjectType,
   list,
   mutationField,
   objectType,
@@ -121,38 +122,26 @@ export const eventsQuery = queryField("events", {
   }
 })
 
+export const EventInputType = inputObjectType({
+  name: "EventInput",
+  definition(t) {
+    t.string("name")
+    t.string("desc")
+    t.float("lat")
+    t.float("lng")
+    t.string("start")
+    t.string("end")
+    t.list.string("categories")
+  }
+})
+
 export const createEvent = mutationField("createEvent", {
   type: "Boolean",
   args: {
-    name: stringArg(),
-    desc: stringArg(),
-    lat: floatArg(),
-    lng: floatArg(),
-    start: stringArg(),
-    end: stringArg()
+    data: arg({ type: EventInputType })
   },
   async resolve(_, args, ctx) {
-    try {
-      await ctx.prisma.event.create({
-        data: {
-          hostId: ctx.clientId,
-          start: new Date(args.start),
-          end: new Date(args.end),
-          name: args.name,
-          desc: args.desc,
-          lat: args.lat,
-          lng: args.lng,
-          attendance: {
-            create: {
-              userId: ctx.clientId
-            }
-          }
-        }
-      })
-      return true
-    } catch (e) {
-      return false
-    }
+    return ctx.event.create(args)
   }
 })
 
@@ -160,13 +149,7 @@ export const updateEvent = mutationField("updateEvent", {
   type: "Boolean",
   args: {
     eventId: stringArg(),
-    name: stringArg(),
-    desc: stringArg(),
-    lat: floatArg(),
-    lng: floatArg(),
-    start: stringArg(),
-    end: stringArg(),
-    categories: list(stringArg())
+    data: arg({ type: EventInputType })
   },
   async authorize(_, args, ctx) {
     const event = await ctx.prisma.event.findUnique({
@@ -176,44 +159,7 @@ export const updateEvent = mutationField("updateEvent", {
     return event?.hostId === ctx.clientId
   },
   async resolve(_, args, ctx) {
-    try {
-      await ctx.prisma.event.update({
-        where: { id: args.eventId },
-        data: {
-          start: new Date(args.start),
-          end: new Date(args.end),
-          name: args.name,
-          desc: args.desc,
-          lat: args.lat,
-          lng: args.lng,
-          categories: {
-            // adds any categories in list:
-            upsert: args.categories.map((c) => ({
-              where: {
-                eventId_categoryId: {
-                  eventId: args.eventId,
-                  categoryId: c
-                }
-              },
-              create: { categoryId: c },
-              update: { categoryId: c }
-            })),
-            // removes all categories,
-            // except items in list:
-            deleteMany: {
-              NOT: {
-                categoryId: {
-                  in: args.categories
-                }
-              }
-            }
-          }
-        }
-      })
-      return true
-    } catch (e) {
-      return false
-    }
+    return ctx.event.update(args)
   }
 })
 

@@ -187,13 +187,23 @@ type EventEdge {
   node: Event
 }
 
+input EventInput {
+  categories: [String!]!
+  desc: String!
+  end: String!
+  lat: Float!
+  lng: Float!
+  name: String!
+  start: String!
+}
+
 type HelloWorld {
   test: String
 }
 
 type Mutation {
   blockUser(userId: String!): Boolean
-  createEvent(desc: String!, end: String!, lat: Float!, lng: Float!, name: String!, start: String!): Boolean
+  createEvent(data: EventInput!): Boolean
   deleteEvent(eventId: String!): Boolean
   deleteUser: Boolean
   followUser(celebId: String!): Boolean
@@ -203,7 +213,7 @@ type Mutation {
   unblockUser(userId: String!): Boolean
   unfollowUser(celebId: String!): Boolean
   unlikeEvent(eventId: String!): Boolean
-  updateEvent(categories: [String!]!, desc: String!, end: String!, eventId: String!, lat: Float!, lng: Float!, name: String!, start: String!): Boolean
+  updateEvent(data: EventInput!, eventId: String!): Boolean
 
   """Sets user data to submitted values, fully replacing previous state"""
   updateUser(categories: [String!]!, username: String!): Boolean

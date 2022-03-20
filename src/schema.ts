@@ -1,4 +1,5 @@
 import { makeSchema, connectionPlugin, fieldAuthorizePlugin } from "nexus"
+import { validatePlugin } from "nexus-validate"
 import * as SchemaTypes from "./schema-types"
 import path, { join } from "path"
 
@@ -12,6 +13,7 @@ export const schema = makeSchema({
     export: "Context"
   },
   plugins: [
+    validatePlugin(),
     fieldAuthorizePlugin(),
     connectionPlugin({
       includeNodesField: true,
