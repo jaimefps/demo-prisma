@@ -1285,7 +1285,7 @@ export interface Event {
     * ```prisma
     * model Event {
     *   /// Lorem ipsum dolor sit amet.
-    *   end  DateTime?
+    *   end  DateTime
     * }
     * ```
     *
@@ -1314,7 +1314,7 @@ export interface Event {
      * The type of this field.
      */
     type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNullDef<'DateTime'>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
     : 'Warning/Error: The type \'DateTime\' is not amoung the union of GetGen<\'allNamedTypes\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \'DateTime\' to your GraphQL API.'
   
     /**

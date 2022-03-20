@@ -99,7 +99,9 @@ export const eventQuery = queryField("event", {
   },
   resolve(_, args, ctx) {
     return ctx.prisma.event.findUnique({
-      where: { id: args.id }
+      where: {
+        id: args.id
+      }
     })
   }
 })
@@ -107,7 +109,15 @@ export const eventQuery = queryField("event", {
 export const eventsQuery = queryField("events", {
   type: list(EventType),
   resolve(_, args, ctx) {
-    return ctx.prisma.event.findMany()
+    const { boundStart, boundEnd } = ctx.event.validTimeBoundaries()
+    return ctx.prisma.event.findMany({
+      where: {
+        OR: [
+          { AND: [{ start: { gt: boundStart } }, { start: { lt: boundEnd } }] },
+          { AND: [{ end: { gt: boundStart } }, { end: { lt: boundEnd } }] }
+        ]
+      }
+    })
   }
 })
 

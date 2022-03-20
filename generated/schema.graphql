@@ -139,7 +139,7 @@ type Event {
   ): CategoryConnection
   createdAt: DateTime!
   desc: String
-  end: DateTime
+  end: DateTime!
   host: User!
   hostId: String!
   id: ID!

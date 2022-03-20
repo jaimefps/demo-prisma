@@ -8,12 +8,19 @@ x readEvent
 x deleteEvent
 x updateEvent
 
-x readCategories
 x readBadges
+assignBadge
+removeBadge
+
+x readCategories
 
 x followUser
 x unfollowUser
+x blockUser
+x unblockUser
 
+x likeEvent
+x unlikeEvent
 x joinEvent
 x leaveEvent
 

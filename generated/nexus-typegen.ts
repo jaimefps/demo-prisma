@@ -91,7 +91,7 @@ export interface NexusGenObjects {
   Event: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     desc?: string | null; // String
-    end?: NexusGenScalars['DateTime'] | null; // DateTime
+    end: NexusGenScalars['DateTime']; // DateTime!
     hostId: string; // String!
     id: string; // ID!
     lat: number; // Float!
@@ -193,7 +193,7 @@ export interface NexusGenFieldTypes {
     categories: NexusGenRootTypes['CategoryConnection'] | null; // CategoryConnection
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     desc: string | null; // String
-    end: NexusGenScalars['DateTime'] | null; // DateTime
+    end: NexusGenScalars['DateTime']; // DateTime!
     host: NexusGenRootTypes['User']; // User!
     hostId: string; // String!
     id: string; // ID!

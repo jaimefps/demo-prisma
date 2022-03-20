@@ -48,7 +48,7 @@ model Event {
   lat    Float
   lng    Float
   start  DateTime
-  end    DateTime?
+  end    DateTime
   hostId String
 
   host       User                 @relation(fields: [hostId], references: [id], onDelete: Cascade)
