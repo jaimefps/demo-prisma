@@ -1,4 +1,3 @@
-export * from "./superuser"
 export * from "./badge"
 export * from "./category"
 export * from "./event"

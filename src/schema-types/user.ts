@@ -217,3 +217,96 @@ export const unfollowUser = mutationField("unfollowUser", {
     }
   }
 })
+
+export const blockUser = mutationField("blockUser", {
+  type: "Boolean",
+  args: {
+    userId: stringArg()
+  },
+  authorize(_, args, ctx) {
+    // cannot block self
+    return ctx.clientIsSuperuser && args.userId !== ctx.clientId
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.user.update({
+        where: { id: args.userId },
+        data: {
+          blocked: true
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const unblockUser = mutationField("unblockUser", {
+  type: "Boolean",
+  args: {
+    userId: stringArg()
+  },
+  authorize(_, args, ctx) {
+    return ctx.clientIsSuperuser
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.user.update({
+        where: { id: args.userId },
+        data: {
+          blocked: false
+        }
+      })
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+})
+
+export const updateUser = mutationField("updateUser", {
+  type: "Boolean",
+  description:
+    "Sets user data to submitted values, fully replacing previous state",
+  args: {
+    username: stringArg(),
+    categories: list(stringArg())
+  },
+  async resolve(_, args, ctx) {
+    try {
+      await ctx.prisma.user.update({
+        where: { id: ctx.clientId },
+        data: {
+          username: args.username,
+          categories: {
+            // adds any categories in list:
+            upsert: args.categories.map((c) => ({
+              where: {
+                userId_categoryId: {
+                  userId: ctx.clientId,
+                  categoryId: c
+                }
+              },
+              create: { categoryId: c },
+              update: { categoryId: c }
+            })),
+            // removes all categories,
+            // except items in list:
+            deleteMany: {
+              NOT: {
+                categoryId: {
+                  in: args.categories
+                }
+              }
+            }
+          }
+        }
+      })
+      return true
+    } catch (e) {
+      console.log({ error: e })
+      return false
+    }
+  }
+})

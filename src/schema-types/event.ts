@@ -1,4 +1,11 @@
-import { floatArg, list, mutationField, objectType, queryField, stringArg } from "nexus"
+import {
+  floatArg,
+  list,
+  mutationField,
+  objectType,
+  queryField,
+  stringArg
+} from "nexus"
 import { Event } from "../../generated/nexus-prisma"
 import { UserType, CategoryType } from "."
 

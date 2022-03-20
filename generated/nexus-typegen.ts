@@ -229,6 +229,7 @@ export interface NexusGenFieldTypes {
     unfollowUser: boolean | null; // Boolean
     unlikeEvent: boolean | null; // Boolean
     updateEvent: boolean | null; // Boolean
+    updateUser: boolean | null; // Boolean
   }
   PageInfo: { // field return type
     endCursor: string | null; // String
@@ -352,6 +353,7 @@ export interface NexusGenFieldTypeNames {
     unfollowUser: 'Boolean'
     unlikeEvent: 'Boolean'
     updateEvent: 'Boolean'
+    updateUser: 'Boolean'
   }
   PageInfo: { // field return type name
     endCursor: 'String'
@@ -483,6 +485,10 @@ export interface NexusGenArgTypes {
       lng: number; // Float!
       name: string; // String!
       start: string; // String!
+    }
+    updateUser: { // args
+      categories: string[]; // [String!]!
+      username: string; // String!
     }
   }
   Query: {

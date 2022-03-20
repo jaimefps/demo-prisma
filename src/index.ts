@@ -1,4 +1,8 @@
-import { ApolloServer, AuthenticationError, ForbiddenError } from "apollo-server"
+import {
+  ApolloServer,
+  AuthenticationError,
+  ForbiddenError
+} from "apollo-server"
 import { authenticate, dangerous_authenticateDev } from "./auth"
 import { Context } from "./context"
 import { schema } from "./schema"

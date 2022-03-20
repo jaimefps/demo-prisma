@@ -203,6 +203,9 @@ type Mutation {
   unfollowUser(celebId: String!): Boolean
   unlikeEvent(eventId: String!): Boolean
   updateEvent(desc: String!, end: String!, eventId: String!, lat: Float!, lng: Float!, name: String!, start: String!): Boolean
+
+  """Sets user data to submitted values, fully replacing previous state"""
+  updateUser(categories: [String!]!, username: String!): Boolean
 }
 
 """
