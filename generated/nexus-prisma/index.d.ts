@@ -617,7 +617,7 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'categories'>
   }
   /**
-    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.badges`.
+    * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.badgesReceived`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     *
@@ -626,7 +626,7 @@ export interface User {
     * ```prisma
     * model User {
     *   /// Lorem ipsum dolor sit amet.
-    *   badges  BadgesOnUsers
+    *   badgesReceived  BadgesOnUsers
     * }
     * ```
     *
@@ -641,15 +641,15 @@ export interface User {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.badges)
+    *     t.field(User.badgesReceived)
     *   }
     * })
     */
-  badges: {
+  badgesReceived: {
     /**
      * The name of this field.
      */
-    name: 'badges'
+    name: 'badgesReceived'
   
     /**
      * The type of this field.
@@ -666,7 +666,7 @@ export interface User {
     /**
      * The resolver of this field
      */
-    resolve: NexusCore.FieldResolver<'User', 'badges'>
+    resolve: NexusCore.FieldResolver<'User', 'badgesReceived'>
   }
   /**
     * Generated Nexus `t.field` configuration based on your Prisma schema's model-field `User.following`.

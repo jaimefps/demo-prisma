@@ -29,13 +29,13 @@ model User {
   blocked  Boolean     @default(false)
   type     AccountType @default(BASIC)
 
-  hosting    Event[]
-  attending  UsersInEvents[]
-  categories CategoriesOnUsers[]
-  badges     BadgesOnUsers[]
-  following  Fandom[]            @relation("fan")
-  followers  Fandom[]            @relation("celeb")
-  likes      UserLikesEvent[]
+  hosting        Event[]
+  attending      UsersInEvents[]
+  categories     CategoriesOnUsers[]
+  badgesReceived BadgesOnUsers[]
+  following      Fandom[]            @relation("fan")
+  followers      Fandom[]            @relation("celeb")
+  likes          UserLikesEvent[]
 }
 
 model Event {

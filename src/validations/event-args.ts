@@ -1,12 +1,13 @@
 import { UserInputError } from "apollo-server"
-import moment from "moment"
+import { EventInputArgs } from "../types"
 import { Context } from "../context"
-import { EventInputArgs } from "../data-sources"
+import moment from "moment"
 
 export class EventArgs {
   constructor(protected ctx: Context) {
     this.ctx = ctx
   }
+
   private async getCreatedAt(args: EventInputArgs) {
     if (args.eventId) {
       const currEvent = await this.ctx.prisma.event.findUnique({

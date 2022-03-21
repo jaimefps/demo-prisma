@@ -1,11 +1,6 @@
-import { NexusGenInputs } from "../../generated/nexus-typegen"
+import { EventInputArgs } from "../types"
 import { Context } from "../context"
 import moment from "moment"
-
-export type EventInputArgs = {
-  eventId?: string
-  data: NexusGenInputs["EventInput"]
-}
 
 export class EventDataSource {
   constructor(protected ctx: Context) {

@@ -1,7 +1,7 @@
 import { list, nullable, objectType, queryField, stringArg } from "nexus"
 import { Badge } from "../../generated/nexus-prisma"
-import { UserType } from "."
 import { Prisma } from "@prisma/client"
+import { UserType } from "."
 
 export const BadgeType = objectType({
   name: Badge.$name,
@@ -17,7 +17,7 @@ export const BadgeType = objectType({
       nodes(parent, args, ctx) {
         return ctx.prisma.user.findMany({
           where: {
-            badges: {
+            badgesReceived: {
               some: {
                 badge: {
                   id: parent.id
