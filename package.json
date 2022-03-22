@@ -1,5 +1,5 @@
 {
-  "name": "primsa_demo",
+  "name": "demo-prisma",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -22,12 +22,10 @@
   },
   "scripts": {
     "check:ts": "tsc --noEmit",
-    "dev": "nodemon",
-    "generate:all": "yarn -s run generate:prisma && yarn -s run generate:nexus",
-    "generate:nexus": "ts-node --transpile-only src/index.ts",
-    "generate:prisma": "prisma generate",
-    "migrate": "prisma migrate dev && yarn check:ts",
-    "seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "db:migrate": "prisma migrate dev && yarn check:ts",
+    "start:prod": "NODE_ENV=production ts-node src/index.ts",
+    "start": "nodemon"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
